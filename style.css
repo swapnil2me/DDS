@@ -1,7 +1,25 @@
-#particles-js{
+html {
+  scroll-behavior: smooth;
+}
+
+#intro{
   background: #151535;
   height: 400px;
+}
 
+#design{
+  background: #150035;
+  height: 400px;
+}
+
+#analyze{
+  background: #001535;
+  height: 400px;
+}
+
+#learn{
+  background: #151500;
+  height: 400px;
 }
 
 *{
@@ -13,7 +31,25 @@
 
 body{
   background: #000;
-  min-height: 200vh;
+  min-height: 250vh;
+}
+
+div{
+  animation: ease;
+  transition: 0.6s;
+  }
+
+.container {
+  position: relative;
+  text-align: center;
+  color: white;
+}
+
+.centered {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 header{
@@ -25,22 +61,20 @@ header{
   justify-content: space-between;
   align-items: center;
   transition: 0.6s;
-  padding: 40px 100px;
+  padding: 40px 10px;
   z-index: 100000;
 }
 
 header.sticky{
-  padding: 5px 100px;
-  background: #fff;
+  padding: 5px 10px;
 }
 
-header .logo {
+header .title {
   position: relative;
-  font-weight: 700;
+  font-weight: 500;
   color: #fff;
   text-decoration: none;
   font-size: 3em;
-  text-transform: uppercase;
   letter-spacing: 2px;
   transition: 0.6s;
 }
@@ -63,11 +97,13 @@ header ul li a {
   text-decoration: none;
   color: #fff;
   letter-spacing: 2px;
+  font-size: 1em;
   font-weight: 500px;
   transition: 0.6s;
 }
 
-header.sticky .logo,
+header.sticky .title,
 header.sticky ul li a {
-  color: #000;
+  font-size: 1em;
+  font-weight: 500px;
 }

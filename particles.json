@@ -1,7 +1,7 @@
 {
   "particles":{
     "number":{
-      "value":100
+      "value":50
     },
     "color":{
       "value":"#ffc324"
@@ -18,10 +18,10 @@
       }
     },
     "size":{
-      "value":5,
+      "value":3,
       "random":true,
       "anim":{
-        "enable":true,
+        "enable":false,
         "speed":5
       }
     },
@@ -34,8 +34,8 @@
     },
     "move":{
       "enable":true,
-      "speed":0.5,
       "direction":"right",
+      "speed":0.5,
       "straight":false,
       "attract":{
         "enable":true
@@ -46,7 +46,7 @@
     "events":{
       "onhover":{
         "enable":true,
-        "mode":"bubble"
+        "mode":"repulse"
       },
       "onclick":{
         "enable":true,
@@ -55,8 +55,8 @@
     },
     "modes":{
       "repulse":{
-        "distance":25,
-        "duration":0.1
+        "distance":50,
+        "duration":10
       },
       "bubble":{
         "distance":10,

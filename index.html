@@ -4,39 +4,51 @@
     <meta charset="utf-8">
     <title></title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js" charset="utf-8"></script>
   </head>
   <body>
 
-    <header>
-      <a href="#" class="logo">Logo</a>
+    <header class="navbar">
+      <a href="#intro" class="title clickMe">AiryZoka</a>
       <ul>
-        <li><a href="#">Home</a></li>
-        <li><a href="#">About</a></li>
-        <li><a href="#">Services</a></li>
-        <li><a href="#">Portfolio</a></li>
-        <li><a href="#">Team</a></li>
-        <li><a href="#">Contact</a></li>
+        <li><a class="clickMe" href="#design">Design</a></li>
+        <li><a class="clickMe" href="#analyze">Analyze</a></li>
+        <li><a class="clickMe" href="#learn">Learn</a></li>
+        <li><a class="clickMe" href="#footer">Contact Us</a></li>
       </ul>
     </header>
 
-    <div id="particles-js">
-
+    <div id="intro" class="container">
+      <p class="centered">Focus on your goals while we work for your degital solutions</p>
+    </div>
+    <div id="design" class="container">
+      <p class="centered">Design</p>
+    </div>
+    <div id="analyze" class="container">
+      <p class="centered">Analyze</p>
+    </div>
+    <div id="learn" class="container">
+      <p class="centered">Learn</p>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js">
+    <footer id="footer">
+      <div id="learn" class="container">
+        <p class="centered">About Us</p>
+      </div>
+    </footer>
 
+    <script id="particleScript" type="text/javascript">
+      particlesJS.load('intro','particles.json',function() {});
+      particlesJS.load('design','particles.json',function() {});
+      particlesJS.load('analyze','particles.json',function() {});
+      particlesJS.load('learn','particles.json',function() {});
     </script>
-
-    <script type="text/javascript">
-      particlesJS.load('particles-js','particles.json',function() {
-        console.log('loaded');
-      });
-    </script>
-    <script type="text/javascript">
+    <script id="navScript" type="text/javascript">
       window.addEventListener("scroll", function(){
         var header = document.querySelector("header");
         header.classList.toggle("sticky", window.scrollY > 0);
       })
     </script>
+
   </body>
 </html>
