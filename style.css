@@ -107,3 +107,82 @@ header.sticky ul li a {
   font-size: 1em;
   font-weight: 500px;
 }
+
+line {
+  stroke: red;
+}
+
+path {
+  stroke: green;
+  fill: none;
+  stroke-width: 1px;
+}
+
+g.group0 path,
+g.group0 circle {
+  stroke: red;
+  fill:none;
+}
+
+g.hidden line,
+g.hidden path {
+  display: none;
+}
+
+g.tick line{
+  stroke: blue;
+}
+
+g.tick text{
+  font-size: 12px;
+  fill: red;
+}
+
+#analyze,#dashboard, #linePlot{
+  height: 600px;
+}
+
+
+.axis path,
+.axis line {
+    fill: none;
+    stroke: #0f0;
+    shape-rendering: crispEdges;
+}
+
+.x.axis,.y.axis text{
+  fill: red;
+}
+
+/* .x.axis path {
+    display: none;
+} */
+
+.line {
+    fill: none;
+    stroke: red;
+    stroke-width: 1.5px;
+}
+
+.overlay {
+    fill: none;
+    pointer-events: all;
+}
+
+.focus circle {
+    fill: steelblue;
+}
+
+.focus text {
+    fill:yellow;
+    font-size: 14px;
+}
+
+.tooltip {
+    fill: rgba(00,00,00,0.3);
+    stroke: yellow;
+}
+
+.tooltip-date, .tooltip-likes {
+    font-weight: bold;
+}

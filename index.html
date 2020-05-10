@@ -5,6 +5,8 @@
     <title></title>
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js" charset="utf-8"></script>
+    <!-- <script type="text/javascript" src="d3.v4.js"></script> -->
+    <script src="//d3js.org/d3.v3.min.js"></script>
   </head>
   <body>
 
@@ -24,8 +26,13 @@
     <div id="design" class="container">
       <p class="centered">Design</p>
     </div>
-    <div id="analyze" class="container">
+    <div id="analyze" class="container" >
       <p class="centered">Analyze</p>
+        <div id="dashboard" class="centered">
+          <div id="linePlot" >
+            <script type="text/javascript" src="prices.js"></script>
+          </div>
+        </div>
     </div>
     <div id="learn" class="container">
       <p class="centered">Learn</p>
