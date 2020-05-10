@@ -3,15 +3,15 @@
   <head>
     <meta charset="utf-8">
     <title></title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="stylesheet.css">
     <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js" charset="utf-8"></script>
     <!-- <script type="text/javascript" src="d3.v4.js"></script> -->
     <script src="//d3js.org/d3.v4.min.js"></script>
   </head>
-  <body>
+  <body class="mainPage">
 
     <header class="navbar">
-      <a href="#intro" class="title clickMe">AiryZoka</a>
+      <a id="companyLogo" href="#intro" class="title clickMe">AiryZoka</a>
       <ul>
         <li><a class="clickMe" href="#design">Design</a></li>
         <li><a class="clickMe" href="#analyze">Analyze</a></li>
@@ -20,48 +20,48 @@
       </ul>
     </header>
 
-    <div id="intro" class="container">
-      <p class="centered">Focus on your goals while we work for your degital solutions</p>
-    </div>
-    <div id="design" class="container">
-      <p class="centered">Design</p>
+    <div id="intro" class="containerCanvas">
+      <p class="centeredOnCanvas">Focus on your goals while we work for your degital solutions</p>
     </div>
 
-    <div id="analyze" class="container" >
-      <p class="centered">Analyze</p>
-        <div id="dashboard" class="row">
+    <div id="design" class="containerCanvas">
+      <p class="centeredOnCanvas">Design</p>
+    </div>
 
-          <div id="linePlot" class="column">
-            <script type="text/javascript" src="prices.js"></script>
-          </div>
+    <div id="analyze" class="segments fixed-size-container" >
 
-          <div id="liveChart" class="column">
-            <script type="text/javascript" src="liveChart.js"></script>
-          </div>
-
-
+        <div id="linePlot" class="fixed-size">
+          <script type="text/javascript" src="prices.js"></script>
         </div>
+
+        <div id="liveChart" class="fixed-size">
+          <script type="text/javascript" src="liveChart.js"></script>
+        </div>
+
     </div>
-    <div id="learn" class="container">
+
+    <div id="learn" class="segments">
       <p class="centered">Learn</p>
 
     </div>
 
-    <footer id="footer">
-      <div id="learn" class="container">
+    <footer id="footer" class="segments">
+      <div id="contact">
         <p class="centered">About Us</p>
       </div>
     </footer>
+
+
     <script id="particleScript" type="text/javascript">
       particlesJS.load('intro','particles.json',function() {});
-      particlesJS.load('analyze_ParticleJS','particles.json',function() {});
-      particlesJS.load('learn','particles.json',function() {});
+      particlesJS.load('design','particles.json',function() {});
+      particlesJS.load('footer','particles.json',function() {});
     </script>
     <script id="navScript" type="text/javascript">
       window.addEventListener("scroll", function(){
         var header = document.querySelector("header");
-        header.classList.toggle("sticky", window.scrollY > 0);
-      })
+        header.classList.toggle("sticky", window.scrollY > 1);
+      });
     </script>
 
   </body>

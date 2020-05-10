@@ -1,7 +1,7 @@
       var data = [
             ];
-      var margin = { top: 30, right: 30, bottom: 30, left: 30 };
-      var width = 350;
+      var margin = { top: 30, right: 30, bottom: 50, left: 30 };
+      var width = 550;
       var height = 350;
       var globalX = 0;
       var duration = 500;

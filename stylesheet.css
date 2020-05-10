@@ -1,53 +1,46 @@
 html {
   scroll-behavior: smooth;
 }
-
+/* ----------------Main Flex------------------- */
+.mainPage {
+  background-color: #151535;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
 #intro{
   background: #151535;
-  height: 400px;
-}
-
-#design{
-  background: #150035;
-  height: 400px;
-}
-
-
-#learn{
-  background: #151500;
-  height: 400px;
-}
-
-*{
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Poppins', sans-serif;
-}
-
-body{
-  background: #000;
-  min-height: 250vh;
-}
-
-div{
-  animation: ease;
-  transition: 0.6s;
-  }
-
-.containerCanvas {
-  position: relative;
-  text-align: center;
   color: white;
 }
-
-.centeredOnCanvas {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+#design{
+  background: #150035;
+  color: white;
 }
-
+#analyze{
+  background: #151535;;
+  color: white;
+}
+#learn{
+  background: #151500;
+  color: white;
+}
+#footer{
+  background: #AA15BB;
+  color: white;
+}
+.segments{
+  flex: 1;
+  max-width: 1400px;
+  margin: 40px auto 0 auto;
+  background-color: #151535;
+  padding: 30px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+/* ----------------Nav Bar------------------- */
 header{
   position: fixed;
   top: 0;
@@ -103,7 +96,33 @@ header.sticky ul li a {
   font-size: 1em;
   font-weight: 500px;
 }
+/* -----------------Centering On Canvas------------------ */
+.containerCanvas {
+  position: relative;
+  text-align: center;
+}
 
+.centeredOnCanvas {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+/* ----------------------------------- */
+
+
+.fixed-size {
+  width: 550px;
+  height: 350px;
+  margin-bottom: 20px;
+}
+
+/* ---------------D3 JS-------------------- */
+line {
+  stroke: red;
+  fill: none;
+  stroke-width: 2px;
+}
 
 path {
   stroke: red;
@@ -120,9 +139,6 @@ g.tick text{
   fill: red;
 }
 
-#analyze, #dashboard, #linePlot{
-  height: 600px;
-}
 
 .ystock path,
 .xstock path{
@@ -158,6 +174,23 @@ g.tick text{
         stroke: yellow;
     }
 
+.bax {
+        fill: rgba(9,9,9,0.9);
+        stroke: Red;
+    }
+
+.xGrid {
+        fill: rgba(0,200,000,0.1);
+        stroke: rgba(0,200,000,0.65);
+        stroke-width: 1px;
+    }
+
+.baxText {
+    fill:white;
+    font-size: 15px;
+    align-content: center;
+}
+
 .toolBox-date, .toolBox-likes {
     font-weight: bold;
 }
@@ -190,19 +223,4 @@ g.tick text{
   stroke: #DDD;
   stroke-width: 1px;
   fill: none;
-}
-
-
-/* Three image containers (use 25% for four, and 50% for two, etc) */
-.column {
- float: left;
- padding: 5px;
-
-}
-
-/* Clear floats after image containers */
-.row::after {
- content: "";
- clear: both;
- display: table;
 }
