@@ -12,10 +12,6 @@ html {
   height: 400px;
 }
 
-#analyze{
-  background: #001535;
-  height: 400px;
-}
 
 #learn{
   background: #151500;
@@ -108,29 +104,15 @@ header.sticky ul li a {
   font-weight: 500px;
 }
 
-line {
-  stroke: red;
-}
 
 path {
-  stroke: green;
-  fill: none;
-  stroke-width: 1px;
-}
-
-g.group0 path,
-g.group0 circle {
   stroke: red;
-  fill:none;
-}
-
-g.hidden line,
-g.hidden path {
-  display: none;
+  fill: none;
+  stroke-width: 2px;
 }
 
 g.tick line{
-  stroke: blue;
+  stroke: red;
 }
 
 g.tick text{
@@ -138,31 +120,24 @@ g.tick text{
   fill: red;
 }
 
-#analyze,#dashboard, #linePlot{
+#analyze, #dashboard, #linePlot{
   height: 600px;
 }
 
-
-.axis path,
-.axis line {
+.ystock path,
+.xstock path{
     fill: none;
     stroke: #0f0;
     shape-rendering: crispEdges;
 }
 
-.x.axis,.y.axis text{
+.axisStock text{
   fill: red;
 }
 
 /* .x.axis path {
     display: none;
 } */
-
-.line {
-    fill: none;
-    stroke: red;
-    stroke-width: 1.5px;
-}
 
 .overlay {
     fill: none;
@@ -173,16 +148,61 @@ g.tick text{
     fill: steelblue;
 }
 
-.focus text {
+.toolBox text {
     fill:yellow;
-    font-size: 14px;
+    font-size: 11px;
 }
 
-.tooltip {
-    fill: rgba(00,00,00,0.3);
-    stroke: yellow;
-}
+.toolBox-rect {
+        fill: rgba(250,250,250,0.5);
+        stroke: yellow;
+    }
 
-.tooltip-date, .tooltip-likes {
+.toolBox-date, .toolBox-likes {
     font-weight: bold;
+}
+
+#liveChart .axis {
+  font-family: sans-serif;
+  fill: #d35400;
+  font-size: 12px;
+}
+#liveChart .line {
+  fill: none;
+  stroke: rgb(250,250,0);
+  stroke-width: 3px;
+}
+#liveChart .smoothline {
+  fill: none;
+  stroke: rgb(250,250,0);
+  stroke-width: 2px;
+}
+#liveChart .area {
+  fill: rgba(200,200,200,0.8);
+  opacity: 0.1;
+}
+#liveChart .circle {
+  stroke: #e74c3c;
+  stroke-width: 3px;
+  fill: #FFF;
+}
+#liveChart .grid {
+  stroke: #DDD;
+  stroke-width: 1px;
+  fill: none;
+}
+
+
+/* Three image containers (use 25% for four, and 50% for two, etc) */
+.column {
+ float: left;
+ padding: 5px;
+
+}
+
+/* Clear floats after image containers */
+.row::after {
+ content: "";
+ clear: both;
+ display: table;
 }

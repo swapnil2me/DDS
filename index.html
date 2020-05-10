@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js" charset="utf-8"></script>
     <!-- <script type="text/javascript" src="d3.v4.js"></script> -->
-    <script src="//d3js.org/d3.v3.min.js"></script>
+    <script src="//d3js.org/d3.v4.min.js"></script>
   </head>
   <body>
 
@@ -26,16 +26,25 @@
     <div id="design" class="container">
       <p class="centered">Design</p>
     </div>
+
     <div id="analyze" class="container" >
       <p class="centered">Analyze</p>
-        <div id="dashboard" class="centered">
-          <div id="linePlot" >
+        <div id="dashboard" class="row">
+
+          <div id="linePlot" class="column">
             <script type="text/javascript" src="prices.js"></script>
           </div>
+
+          <div id="liveChart" class="column">
+            <script type="text/javascript" src="liveChart.js"></script>
+          </div>
+
+
         </div>
     </div>
     <div id="learn" class="container">
       <p class="centered">Learn</p>
+
     </div>
 
     <footer id="footer">
@@ -43,11 +52,9 @@
         <p class="centered">About Us</p>
       </div>
     </footer>
-
     <script id="particleScript" type="text/javascript">
       particlesJS.load('intro','particles.json',function() {});
-      particlesJS.load('design','particles.json',function() {});
-      particlesJS.load('analyze','particles.json',function() {});
+      particlesJS.load('analyze_ParticleJS','particles.json',function() {});
       particlesJS.load('learn','particles.json',function() {});
     </script>
     <script id="navScript" type="text/javascript">
