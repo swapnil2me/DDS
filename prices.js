@@ -6,15 +6,15 @@ var yBaxWidth = heightStocks/7;
 var bottomShift = yBaxWidth / 1.5;
 
 var freqData=[{State:'MH',freq:{low:4786, mid:1319, high:249}}
-              ,{State:'AZ',freq:{low:1101, mid:412, high:674}}
-              ,{State:'CT',freq:{low:932, mid:2149, high:418}}
-              ,{State:'DE',freq:{low:832, mid:1152, high:1862}}
-              ,{State:'FL',freq:{low:4481, mid:3304, high:948}}
-              ,{State:'GA',freq:{low:1619, mid:167, high:1063}}
-              ,{State:'IA',freq:{low:1819, mid:247, high:1203}}
-              ,{State:'IL',freq:{low:4498, mid:3852, high:942}}
-              ,{State:'IN',freq:{low:797, mid:1849, high:1534}}
-              ,{State:'KS',freq:{low:162, mid:379, high:471}}
+              ,{State:'GJ',freq:{low:1101, mid:412, high:674}}
+              ,{State:'KA',freq:{low:932, mid:2149, high:418}}
+              ,{State:'TN',freq:{low:832, mid:1152, high:1862}}
+              ,{State:'UP',freq:{low:4481, mid:3304, high:948}}
+              ,{State:'DL',freq:{low:1619, mid:167, high:1063}}
+              ,{State:'RJ',freq:{low:1819, mid:247, high:1203}}
+              ,{State:'MP',freq:{low:4498, mid:3852, high:942}}
+              ,{State:'WB',freq:{low:797, mid:1849, high:1534}}
+              ,{State:'GOA',freq:{low:162, mid:379, high:471}}
              ];
 
 var parseDate = d3.timeParse("%x"),
@@ -38,47 +38,51 @@ var yAxisStocks = d3.axisLeft()
 
 var lineStocks = d3.line()
     .x(function(d) { return xsclScocks(d.date); })
-    .y(function(d) { return ysclScocks(d.likes); });
+    .y(function(d) { return ysclScocks(d.shareValue); });
 
 var lineAreaStocks = d3.area()
           .x(function(d){ return xsclScocks(d.date); })
           .y0(ysclScocks(0))
-          .y1(function(d){ return ysclScocks(d.likes); })
+          .y1(function(d){ return ysclScocks(d.shareValue); })
           .curve(d3.curveCardinal);
 
 var smoothLineStocks = d3.line().curve(d3.curveCardinal)
 					    .x(function(d){ return xsclScocks(d.date); })
-					    .y(function(d){ return ysclScocks(d.likes); });
+					    .y(function(d){ return ysclScocks(d.shareValue); });
 
 
 
 
-d3.tsv("prices.tsv", function (error,tsvData) {
+d3.tsv("swap.tsv", function (error,tsvData) {
   // var clonedArray = JSON.parse(JSON.stringify(dataOuterFunction.slice(0,20)))
-  tsvData.forEach(function(d) {
-      d.date = parseDate(d.date);
-      d.likes = +d.likes;
-  });
+  console.log(typeof(tsvData));
+  // console.log(tsvData);
+  var stateData = []
 
-  tsvData.sort(function(a, b) {
-      return a.date - b.date;
-  });
-
-  plotPrices(error, tsvData);
   // setTimeout(() => {
   //   plotPrices(error, tsvData.slice(50,100));
   // },5000);
-
+  selectStateAndPlot("MH")
   dashboard('#dashboard',freqData);
 
-
+  function selectStateAndPlot(stateTag) {
+    stateData = [];
+    console.log(stateTag);
+    tsvData.forEach(function(d) {
+      if (d.STATES === stateTag) {
+        stateData.push({"date":parseDate(d.month),"shareValue":+d.P1});
+      }
+    });
+    plotPrices(error, stateData);
+  }
 
   function plotPrices(error, data) {
+
+      console.log(data.length);
       if (error) throw error;
 
       var svgtest = d3.select("#linePlot").select("svg");
       if (!svgtest.empty()) {
-        console.log("updating !");
         svgtest.remove();
       }
 
@@ -90,8 +94,11 @@ d3.tsv("prices.tsv", function (error,tsvData) {
 
 
       xsclScocks.domain([data[0].date, data[data.length - 1].date]);
-      ysclScocks.domain(d3.extent(data, function(d) { return d.likes; }));
+      ysclScocks.domain(d3.extent(data, function(d) { return d.shareValue; }));
+
       ysclScocks.domain(d3.extent([ysclScocks.domain()[0]-bottomShift,ysclScocks.domain()[1]+10]));
+      console.log(ysclScocks.domain());
+
       svg.append("g")
           .attr("class", "xstock axisStock")
           .attr("transform", "translate(0," + heightStocks + ")")
@@ -112,8 +119,11 @@ d3.tsv("prices.tsv", function (error,tsvData) {
           .style("text-anchor", "end")
           .text("Price in USD");
 
-      svg.append("path")
-          .datum(data)
+          //
+
+      var linePath = svg.append("path");
+
+      linePath.datum(data).transition().duration(10)
           .attr("class", "line")
           .attr("d", smoothLineStocks);
 
@@ -139,7 +149,7 @@ d3.tsv("prices.tsv", function (error,tsvData) {
           .text("Price:");
 
       focusBox.append("text")
-          .attr("class", "toolBox-likes")
+          .attr("class", "toolBox-shareValue")
           .attr("x", 60)
           .attr("y", 18);
 
@@ -219,7 +229,7 @@ d3.tsv("prices.tsv", function (error,tsvData) {
 
 
       movePointer(xsclScocks(data[data.length-2].date),
-                  ysclScocks(data[data.length-2].likes),
+                  ysclScocks(data[data.length-2].shareValue),
                   data[data.length-2]);
 
       function mousemove() {
@@ -229,8 +239,8 @@ d3.tsv("prices.tsv", function (error,tsvData) {
               d1 = data[i],
               d = x0 - d0.date > d1.date - x0 ? d1 : d0,
               dt = xsclScocks(d.date),
-              lk = ysclScocks(d.likes);
-          // console.log(ysclScocks(d.likes) , heightStocks/2);
+              lk = ysclScocks(d.shareValue);
+          // console.log(ysclScocks(d.shareValue) , heightStocks/2);
           movePointer(dt,lk,d);
       }
 
@@ -240,7 +250,7 @@ d3.tsv("prices.tsv", function (error,tsvData) {
         focus.attr("transform", "translate(" + xCord + "," + yCord + ")");
         focusBox.transition().duration(100).attr("transform", "translate(" + xcord + "," + 0 + ")")
                 .select(".toolBox-date").text(dateFormatter(dataPoint.date));
-        focusBox.select(".toolBox-likes").text(formatValue(dataPoint.likes));
+        focusBox.select(".toolBox-shareValue").text(formatValue(dataPoint.shareValue));
 
         xBox.transition().duration(10)
             .attr("transform", "translate(" + xCord + "," + 1.09*heightStocks + ")")
@@ -248,7 +258,7 @@ d3.tsv("prices.tsv", function (error,tsvData) {
             .text(dateFormatter(dataPoint.date));
         yBox.transition().duration(10)
             .attr("transform", "translate(" + 0 + "," + yCord + ")")
-            .select(".baxText").text(formatValue(dataPoint.likes));
+            .select(".baxText").text(formatValue(dataPoint.shareValue));
 
 
         xGrid.transition().duration(10).select(".xGrid")
@@ -317,7 +327,7 @@ d3.tsv("prices.tsv", function (error,tsvData) {
               .on("mouseout",mouseout);// mouseout is defined below.
 
           //Create the frequency labels above the rectangles.
-          bars.append("text").text(function(d){ return d3.format(",")(d[1])})
+          bars.append("text").attr("class", "dashRectText").text(function(d){ return d3.format(",")(d[1])})
               .attr("x", function(d) { return xScaleHist(d[0])+xScaleHist.bandwidth()/2; })
               .attr("y", function(d) { return yScaleHist(d[1])-5; })
               .attr("text-anchor", "middle");
@@ -333,11 +343,6 @@ d3.tsv("prices.tsv", function (error,tsvData) {
               .attr("rx", 4)
               .attr("ry", 4);
 
-          barBox.append("text")
-              .attr("class", "barBoxText")
-              .attr("x", 0)
-              .attr("y", 0);
-
           console.log();
           barBox.attr("transform", "translate(" + xScaleHist(fD[0][0]) + "," + hGDim.h + ")");
 
@@ -350,7 +355,9 @@ d3.tsv("prices.tsv", function (error,tsvData) {
               // call update functions of pie-chart and legend.
               pC.update(nD);
               leg.update(nD);
-              plotPrices(error, tsvData.slice(50,100));
+              selectStateAndPlot(d[0]);
+              // plotPrices(null, tsvData.slice(50,96));
+              // console.log(d[0]);
           }
 
           function mouseout(d){    // utility function to be called on mouseout.
@@ -393,7 +400,7 @@ d3.tsv("prices.tsv", function (error,tsvData) {
               .attr("width", pieDim.w).attr("height", pieDim.h).append("g")
               .attr("transform", "translate("+pieDim.w/2+","+(pieDim.h/2+piePadding.t/2)+")");
 
-          piesvg.append("text").attr("class","hg-title").text("Market Share")
+          piesvg.append("text").attr("class","pi-title").text("Market Share")
                                                                   .attr("x",0)
                                                                   .attr("y",-130)
                                                                   .attr("text-anchor", "middle");
