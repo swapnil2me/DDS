@@ -120,7 +120,7 @@ g.tick text{
   fill: red;
 }
 
-#analyze, #dashboard, #linePlot{
+#analyze, #linePlot{
   height: 600px;
 }
 

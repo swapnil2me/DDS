@@ -115,6 +115,20 @@ header.sticky ul li a {
   width: 550px;
   height: 350px;
   margin-bottom: 20px;
+  flex: 1;
+}
+
+.dash-first-column{
+  /* background-color: #FFF; */
+  height: 650px;
+  flex=1;
+  display: flex;
+}
+.dash-second-column{
+  /* background-color: yellow; */
+  flex=1;
+  display: flex;
+  flex-direction: column;
 }
 
 /* ---------------D3 JS-------------------- */
@@ -205,15 +219,36 @@ g.tick text{
   stroke: rgb(250,250,0);
   stroke-width: 3px;
 }
-#liveChart .smoothline {
+#liveChart .smoothline3 {
   fill: none;
   stroke: rgb(250,250,0);
   stroke-width: 2px;
 }
-#liveChart .area {
-  fill: rgba(200,200,200,0.8);
+#liveChart .area3 {
+  fill: rgba(250,250,0,0.8);
   opacity: 0.1;
 }
+
+#liveChart .smoothline1 {
+  fill: none;
+  stroke: rgb(250,0,250);
+  stroke-width: 2px;
+}
+#liveChart .area1 {
+  fill: rgba(250,0,250,0.8);
+  opacity: 0.1;
+}
+
+#liveChart .smoothline2 {
+  fill: none;
+  stroke: rgb(0,250,250);
+  stroke-width: 2px;
+}
+#liveChart .area2 {
+  fill: rgba(0,250,250,0.8);
+  opacity: 0.1;
+}
+
 #liveChart .circle {
   stroke: #e74c3c;
   stroke-width: 3px;
@@ -223,4 +258,50 @@ g.tick text{
   stroke: #DDD;
   stroke-width: 1px;
   fill: none;
+}
+
+/*  */
+.dashPath {  stroke: #fff; }
+.dashPath :hover {  opacity:0.9; }
+.dashRect:hover {  fill:blue; }
+.dashAxis {  font: 10px sans-serif; }
+.legend tr{    border-bottom:1px solid grey; }
+.legend tr:first-child{    border-top:1px solid grey; }
+
+.dashAxis path,
+.dashAxis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.x.dashAxis path {  display: none; }
+.legend{
+    margin-bottom:76px;
+    display:inline-block;
+    border-collapse: collapse;
+    border-spacing: 0px;
+}
+.legend td{
+    padding:4px 5px;
+    vertical-align:bottom;
+}
+.legendFreq, .legendPerc{
+    align:right;
+    width:50px;
+}
+.legendFreq text, text{
+  stroke: white;
+  fill: white;
+}
+td{
+  color: white;
+}
+.hg-title{
+  font: 35px sans-serif;
+  z-index: 5000;
+}
+.dashBarBox{
+  fill:red;
+  opacity:0.9;
 }
