@@ -33,10 +33,10 @@
       var yAxis = d3.axisLeft().scale(y);
 
       var axisX = chart.append('g').attr('class', 'liveAxis')
-             .attr('transform', 'translate('+(margin.left)+', '+(height-margin.bottom)+')')
+             .attr('transform', 'translate('+(margin.left)+', '+(height-margin.bottom-25)+')')
              .call(xAxis.ticks(5));
       var axisY = chart.append('g').attr('class', 'liveAxis')
-            .attr('transform', 'translate('+((margin.left))+', '+margin.top+')')
+            .attr('transform', 'translate('+((margin.left))+', '+(margin.top-25)+')')
             .call(yAxis.ticks(5));
 
 
@@ -90,7 +90,7 @@
   		// 			    .attr('d', line);
       // Append the holder for line chart and fill area
       let plotGroup =chart.append('g')
-                          .attr('transform', 'translate('+(margin.left+18)+', '+(margin.top+5)+')');
+                          .attr('transform', 'translate('+(margin.left+18)+', '+(margin.top+5-25)+')');
       var path1 = plotGroup.append('path');
       var path2 = plotGroup.append('path');
       var path3 = plotGroup.append('path');

@@ -7,6 +7,7 @@ html {
   display: flex;
   justify-content: center;
   flex-direction: column;
+  min-width: 700px;
 }
 #intro{
   background: #151535;
@@ -28,6 +29,11 @@ html {
   color: white;
   flex: 4;
 }
+#train{
+  background: #151500;
+  color: white;
+  flex: 4;
+}
 #footer{
   background: #AA15BB;
   color: white;
@@ -39,13 +45,75 @@ html {
   background-color: #151535;
   padding: 30px 0;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: space-around;
   flex-wrap: wrap;
 }
+.segmentHead{
+  flex:1;
+  display: flex;
+  flex-direction: column;
+  margin: 50px
+}
+.segmentBody{
+  flex:1;
+  display: flex;
+  flex-direction: column;
+}
+/* ----------------------------------- */
+
+
+.fixed-size {
+  width: 550px;
+  height: 350px;
+  margin-bottom: 20px;
+  flex: 2;
+}
+
+.dash-first-column{
+  /* background-color: #FFF; */
+  /* height: 700px; */
+  flex=1;
+  flex-wrap: wrap;
+  display: flex;
+  margin: 20px 20px 00px 20px;
+  flex-direction: column;
+  padding-left: 30px;
+}
+@media (min-width: 1080px) {
+  .dash-first-column{
+    flex-direction: row;
+  }
+}
+.dash-second-column{
+  /* background-color: yellow; */
+  margin: 00px 20px 20px 20px;
+  flex=2;
+  display: flex;
+  flex-wrap: wrap;
+  /* flex-direction: column; */
+  /* margin-top: 30px; */
+}
+.pieChartGroup{
+  margin-left: 50px;
+}
+/* -----------------Centering On Canvas------------------ */
+.containerCanvas {
+  position: relative;
+  text-align: center;
+}
+
+.centeredOnCanvas {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
 /* ----------------Nav Bar------------------- */
 header{
-  position: fixed;
+  /* position: fixed; */
+  position: sticky;
   top: 0;
   left: 0;
   width: 100%;
@@ -56,6 +124,7 @@ header{
   transition: 0.6s;
   padding: 20px 20px;
   z-index: 100000;
+  min-width: 700px;
 }
 
 header .title {
@@ -108,41 +177,6 @@ header.sticky{
   height: 30px;
   padding: 1px 1px;
   background: #fff;
-}
-/* -----------------Centering On Canvas------------------ */
-.containerCanvas {
-  position: relative;
-  text-align: center;
-}
-
-.centeredOnCanvas {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-/* ----------------------------------- */
-
-
-.fixed-size {
-  width: 550px;
-  height: 350px;
-  margin-bottom: 20px;
-  flex: 1;
-}
-
-.dash-first-column{
-  /* background-color: #FFF; */
-  height: 700px;
-  flex=1;
-  display: flex;
-}
-.dash-second-column{
-  /* background-color: yellow; */
-  flex=2;
-  display: flex;
-  flex-direction: column;
-  /* margin-top: 30px; */
 }
 
 /* ---------------D3 JS-------------------- */
@@ -340,7 +374,7 @@ g.tick line{
 
 .x.dashAxis path {  display: none; }
 .legend{
-    margin-bottom:76px;
+    margin-bottom:50px;
     display:inline-block;
     border-collapse: collapse;
     border-spacing: 0px;

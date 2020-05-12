@@ -207,12 +207,12 @@ d3.tsv("swap.tsv", function (error,tsvData) {
                                         changeProductLine(0);
                                         // updateLine();
                                       })
-          .on("mouseout", function() { focus.style("display", "none");
-                                       focusBox.style("display", "none");
-                                       xBox.style("display", "none");
-                                       yBox.style("display", "none");
-                                       xGrid.style("display", "none");
-                                       yGrid.style("display", "none");})
+          // .on("mouseout", function() { focus.style("display", "none");
+          //                              focusBox.style("display", "none");
+          //                              xBox.style("display", "none");
+          //                              yBox.style("display", "none");
+          //                              xGrid.style("display", "none");
+          //                              yGrid.style("display", "none");})
           .on("mousemove", mousemove);
 
       var xBox = svg.append("g").attr("class", "xBox").style("display", "none");
