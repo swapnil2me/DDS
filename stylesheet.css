@@ -416,3 +416,55 @@ td{
   fill:red;
   opacity:0.9;
 }
+/* ---------------------------- */
+.listen-segmentBody{
+  display: flex;
+  flex-direction: row;
+}
+.listen-first-column{
+  flex: 1;
+  width: 100%;
+  background: yellow;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* align-content: center; */
+  /* justify-content: space-around; */
+}
+.listen-second-column{
+  flex: 1;
+  background: red;
+  display: flex;
+  flex-direction: column;
+}
+.rawdata{
+  height: 500px;
+  width: 500px;
+  background-color: red;
+}
+.subtracted{
+  height: 500px;
+  width: 500px;
+  background-color: green;
+}
+.agoodfit{
+  height: 500px;
+  width: 500px;
+  background-color: blue;
+}
+.subtractBtn{
+  flex:1;
+  align-items: center;
+  background-color: red;
+}
+.extractBtn{
+  flex:1;
+  /* align-items: center; */
+  /* justify-content: center; */
+  background-color: green;
+}
+.fitBtn{
+  flex:1;
+  align-items: center;
+  background-color: blue;
+}
