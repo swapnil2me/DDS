@@ -5,17 +5,16 @@ var xBaxWidth = widthStocks/5.5;
 var yBaxWidth = heightStocks/7;
 var bottomShift = yBaxWidth / 1.5;
 
-var freqData=[{State:'MH',freq:{low:4786, mid:1319, high:249}}
-              ,{State:'GJ',freq:{low:1101, mid:412, high:674}}
-              ,{State:'KA',freq:{low:932, mid:2149, high:418}}
-              ,{State:'TN',freq:{low:832, mid:1152, high:1862}}
-              ,{State:'UP',freq:{low:4481, mid:3304, high:948}}
-              ,{State:'DL',freq:{low:1619, mid:167, high:1063}}
-              ,{State:'RJ',freq:{low:1819, mid:247, high:1203}}
-              ,{State:'MP',freq:{low:4498, mid:3852, high:942}}
-              ,{State:'WB',freq:{low:797, mid:1849, high:1534}}
-              ,{State:'GOA',freq:{low:162, mid:379, high:471}}
-             ];
+var freqData=[{'State': 'MH', 'freq': {'P0': 6691, 'P1': 12508, 'P2': 12538}},
+              {'State': 'GJ', 'freq': {'P0': 5765, 'P1': 10412, 'P2': 10856}},
+              {'State': 'KA', 'freq': {'P0': 4750, 'P1': 8751, 'P2': 8352}},
+              {'State': 'TN', 'freq': {'P0': 5260, 'P1': 9125, 'P2': 9326}},
+              {'State': 'UP', 'freq': {'P0': 7071, 'P1': 11742, 'P2': 12404}},
+              {'State': 'DL', 'freq': {'P0': 4076, 'P1': 7056, 'P2': 6497}},
+              {'State': 'RJ', 'freq': {'P0': 3997, 'P1': 5874, 'P2': 5560}},
+              {'State': 'MP', 'freq': {'P0': 4900, 'P1': 8599, 'P2': 8529}},
+              {'State': 'WB', 'freq': {'P0': 4206, 'P1': 7992, 'P2': 7827}},
+              {'State': 'GOA', 'freq': {'P0': 3782, 'P1': 5243, 'P2': 4731}}];
 
 var parseDate = d3.timeParse("%x"),
     bisectDate = d3.bisector(function(d) { return d.date; }).left,
@@ -55,9 +54,11 @@ var smoothLineStocks = d3.line().curve(d3.curveCardinal)
 
 d3.tsv("swap.tsv", function (error,tsvData) {
   // var clonedArray = JSON.parse(JSON.stringify(dataOuterFunction.slice(0,20)))
-  console.log(typeof(tsvData));
+  // console.log(typeof(tsvData));
   // console.log(tsvData);
-  var stateData = []
+  var stateData = [],
+      stateDataC1 = [],
+      stateDataC2 = [];
 
   // setTimeout(() => {
   //   plotPrices(error, tsvData.slice(50,100));
@@ -65,20 +66,48 @@ d3.tsv("swap.tsv", function (error,tsvData) {
   selectStateAndPlot("MH")
   dashboard('#dashboard',freqData);
 
+  function changeProductLine(pid) {
+    let pids = [0,1,2];
+    pids.map(function (id) {
+      if (id === pid) {
+        let swap = document.getElementsByClassName("lineC"+id+"")[0];
+        swap.style["stroke-width"]=3;
+      }else {
+        let swap = document.getElementsByClassName("lineC"+id+"")[0];
+        swap.style["stroke-width"]=1;
+      }
+      // if (pid !== 0) {
+      //
+      //   let iList = ["bax","toolBox","xBox","yBox","xGrid","yGrid","baxText"];
+      //   iList.map((i) => {
+      //     let emnt = document.getElementsByClassName(""+i+"")[0];
+      //     console.log(emnt);
+      //     if (emnt) {
+      //       emnt.style.display="none";
+      //     }
+      //   })
+      // }
+    })
+  }
+
   function selectStateAndPlot(stateTag) {
-    stateData = [];
-    console.log(stateTag);
+    stateData = [],
+    stateDataC1 = [],
+    stateDataC2 = [];
+    // console.log(stateTag);
     tsvData.forEach(function(d) {
       if (d.STATES === stateTag) {
         stateData.push({"date":parseDate(d.month),"shareValue":+d.P1});
+        stateDataC1.push({"date":parseDate(d.month),"shareValue":+d.P2});
+        stateDataC2.push({"date":parseDate(d.month),"shareValue":+d.P3});
       }
     });
-    plotPrices(error, stateData);
+    plotPrices(error, stateData,stateDataC1,stateDataC2);
   }
 
-  function plotPrices(error, data) {
+  function plotPrices(error, data,dataC1,dataC2) {
 
-      console.log(data.length);
+      // console.log(data.length);
       if (error) throw error;
 
       var svgtest = d3.select("#linePlot").select("svg");
@@ -94,10 +123,10 @@ d3.tsv("swap.tsv", function (error,tsvData) {
 
 
       xsclScocks.domain([data[0].date, data[data.length - 1].date]);
-      ysclScocks.domain(d3.extent(data, function(d) { return d.shareValue; }));
+      ysclScocks.domain(d3.extent(data.concat(dataC1).concat(dataC2), function(d) { return d.shareValue; }));
 
       ysclScocks.domain(d3.extent([ysclScocks.domain()[0]-bottomShift,ysclScocks.domain()[1]+10]));
-      console.log(ysclScocks.domain());
+      // console.log(ysclScocks.domain());
 
       svg.append("g")
           .attr("class", "xstock axisStock")
@@ -111,9 +140,9 @@ d3.tsv("swap.tsv", function (error,tsvData) {
 
       svg.append("g")
           .attr("class", "ystock axisStock")
-          .call(yAxisStocks)
+          .call(yAxisStocks.ticks(4))
           .append("text")
-          .attr("transform", "rotate(-90)")
+          .attr("transform", "rotate(-90)","translate(-20,0)")
           .attr("y", 8)
           .attr("dy", ".71em")
           .style("text-anchor", "end")
@@ -124,8 +153,20 @@ d3.tsv("swap.tsv", function (error,tsvData) {
       var linePath = svg.append("path");
 
       linePath.datum(data).transition().duration(10)
-          .attr("class", "line")
+          .attr("class", "lineC0")
           .attr("d", smoothLineStocks);
+
+      var linePathC1 = svg.append("path");
+
+      linePathC1.datum(dataC1).transition().duration(10)
+                .attr("class", "lineC1")
+                .attr("d", smoothLineStocks);
+
+      var linePathC2 = svg.append("path");
+
+      linePathC2.datum(dataC2).transition().duration(10)
+                .attr("class", "lineC2")
+                .attr("d", smoothLineStocks);
 
       var focusBox = svg.append("g").attr("class", "toolBox").style("display", "none");
 
@@ -146,7 +187,7 @@ d3.tsv("swap.tsv", function (error,tsvData) {
       focusBox.append("text")
           .attr("x", 18)
           .attr("y", 18)
-          .text("Price:");
+          .text("Price:  ");
 
       focusBox.append("text")
           .attr("class", "toolBox-shareValue")
@@ -161,12 +202,17 @@ d3.tsv("swap.tsv", function (error,tsvData) {
                                         focusBox.style("display", null);
                                         xBox.style("display", null);
                                         yBox.style("display", null);
+                                        xGrid.style("display", null);
+                                        yGrid.style("display", null);
+                                        changeProductLine(0);
                                         // updateLine();
                                       })
-          // .on("mouseout", function() { focus.style("display", "none");
-          //                              focusBox.style("display", "none");
-          //                              xBox.style("display", "none");
-          //                              yBox.style("display", "none");})
+          .on("mouseout", function() { focus.style("display", "none");
+                                       focusBox.style("display", "none");
+                                       xBox.style("display", "none");
+                                       yBox.style("display", "none");
+                                       xGrid.style("display", "none");
+                                       yGrid.style("display", "none");})
           .on("mousemove", mousemove);
 
       var xBox = svg.append("g").attr("class", "xBox").style("display", "none");
@@ -204,7 +250,7 @@ d3.tsv("swap.tsv", function (error,tsvData) {
       xBox.attr("transform", "translate(" + 0 + "," + 1.09*heightStocks + ")");
       yBox.attr("transform", "translate(" + 0 + "," + 0 + ")");
 
-      var xGrid = svg.append("g").attr("class", "Grid");
+      var xGrid = svg.append("g").attr("class", "Grid").style("display", "none");
       xGrid.append("rect")
           .attr("class", "xGrid")
           .attr("width", xBaxWidth*0.01)
@@ -212,7 +258,7 @@ d3.tsv("swap.tsv", function (error,tsvData) {
           .attr("x", 0.0)
           .attr("y", 0);
 
-      var yGrid = svg.append("g").attr("class", "Grid");
+      var yGrid = svg.append("g").attr("class", "Grid").style("display", "none");
       yGrid.append("rect")
           .attr("class", "xGrid")
           .attr("width", widthStocks)
@@ -228,15 +274,15 @@ d3.tsv("swap.tsv", function (error,tsvData) {
           .attr("r", 5);
 
 
-      movePointer(xsclScocks(data[data.length-2].date),
-                  ysclScocks(data[data.length-2].shareValue),
-                  data[data.length-2]);
+      // movePointer(xsclScocks(data[data.length-2].date),
+      //             ysclScocks(data[data.length-2].shareValue),
+      //             data[data.length-2]);
 
       function mousemove() {
           let x0 = xsclScocks.invert(d3.mouse(this)[0]),
               i = bisectDate(data, x0, 1),
               d0 = data[i - 1],
-              d1 = data[i],
+              d1 = data[i - 1],
               d = x0 - d0.date > d1.date - x0 ? d1 : d0,
               dt = xsclScocks(d.date),
               lk = ysclScocks(d.shareValue);
@@ -277,10 +323,10 @@ d3.tsv("swap.tsv", function (error,tsvData) {
   }
   function dashboard(id, fData){
       var barColor = 'steelblue';
-      function segColor(c){ return {low:"#807dba", mid:"#e08214",high:"#41ab5d"}[c]; }
+      function segColor(c){ return {P0:"#807dba", P1:"#e08214",P2:"#41ab5d"}[c]; }
 
       // compute total for each state.
-      fData.forEach(function(d){d.total=d.freq.low+d.freq.mid+d.freq.high;});
+      fData.forEach(function(d){d.total=d.freq.P0+d.freq.P1+d.freq.P2;});
 
       // function to handle histogram.
       function histoGram(fD){
@@ -343,7 +389,7 @@ d3.tsv("swap.tsv", function (error,tsvData) {
               .attr("rx", 4)
               .attr("ry", 4);
 
-          console.log();
+          // console.log();
           barBox.attr("transform", "translate(" + xScaleHist(fD[0][0]) + "," + hGDim.h + ")");
 
           function mouseover(d){  // utility function to be called on mouseover.
@@ -396,7 +442,7 @@ d3.tsv("swap.tsv", function (error,tsvData) {
           pieDim.r = Math.min(pieDim.w, pieDim.h) / 2;
 
           // create svg for pie chart.
-          var piesvg = d3.select(id).append("svg")
+          var piesvg = d3.select(id).append("svg").attr("class","pieChartGroup")
               .attr("width", pieDim.w).attr("height", pieDim.h).append("g")
               .attr("transform", "translate("+pieDim.w/2+","+(pieDim.h/2+piePadding.t/2)+")");
 
@@ -428,14 +474,19 @@ d3.tsv("swap.tsv", function (error,tsvData) {
           // Utility function to be called on mouseover a pie slice.
             function mouseover(d){
               // call the update function of histogram with new data.
+              let plist = ['P1','P2','P0'];
               hG.update(fData.map(function(v){
                   return [v.State,v.freq[d.data.type]];}),segColor(d.data.type));
+
+              pid = plist.findIndex((i)=>i===d.data.type);
+              changeProductLine(pid);
           }
           //Utility function to be called on mouseout a pie slice.
           function mouseout(d){
               // call the update function of histogram with all data.
               hG.update(fData.map(function(v){
                   return [v.State,v.total];}), barColor);
+
           }
           // Animating the pie-slice requiring a custom function which specifies
           // how the intermediate paths should be drawn.
@@ -496,7 +547,7 @@ d3.tsv("swap.tsv", function (error,tsvData) {
       }
 
       // calculate total frequency by segment for all state.
-      var tF = ['low','mid','high'].map(function(d){
+      var tF = ['P0','P1','P2'].map(function(d){
           return {type:d,
                   freq: d3.sum(fData.map(function(t){
                                             return t.freq[d];

@@ -1,5 +1,5 @@
       var data1 = [],data2 = [],data3 = [];
-      var margin = { top: 30, right: 30, bottom: 50, left: 30 };
+      var margin = { top: 30, right: 30, bottom: 50, left: 50 };
       var width = 550;
       var height = 375;
       let dataPointLimit = 100;
@@ -27,16 +27,16 @@
       //
       var x = d3.scaleTime().domain([0, width]).range([0, width]);
       var globalX = x(dtHigh);
-      var y = d3.scaleLinear().domain([40, height-margin.bottom]).range([height-margin.bottom, 0]);
+      var y = d3.scaleLinear().domain([35, height-margin.bottom-margin.top]).range([height-margin.bottom-margin.top, 0]);
 
       var xAxis = d3.axisBottom().scale(x).tickFormat(liveDateFormatter);;
       var yAxis = d3.axisLeft().scale(y);
 
-      var axisX = chart.append('g').attr('class', 'x axis')
+      var axisX = chart.append('g').attr('class', 'liveAxis')
              .attr('transform', 'translate('+(margin.left)+', '+(height-margin.bottom)+')')
              .call(xAxis.ticks(5));
-      var axisY = chart.append('g').attr('class', 'x axis')
-            .attr('transform', 'translate('+(margin.left)+', '+0+')')
+      var axisY = chart.append('g').attr('class', 'liveAxis')
+            .attr('transform', 'translate('+((margin.left))+', '+margin.top+')')
             .call(yAxis.ticks(5));
 
 
@@ -45,8 +45,8 @@
       let globalXtmp = globalX-dataPointLimit*step;
       for (var i = 0; i < dataPointLimit; i++) {
 
-            data1.push({x: globalXtmp,y: ((Math.random() * 100 + 50) >> 0)});
-            data2.push({x: globalXtmp,y: ((Math.random() * 10 + 250) >> 0)});
+            data1.push({x: globalXtmp,y: ((Math.random() * 10 + 250) >> 0)});
+            data2.push({x: globalXtmp,y: ((Math.random() * 100 + 50) >> 0)});
             data3.push({x: globalXtmp,y: ((Math.random() * 30 + 100) >> 0)});
             globalXtmp += step;
       }
@@ -90,13 +90,28 @@
   		// 			    .attr('d', line);
       // Append the holder for line chart and fill area
       let plotGroup =chart.append('g')
-                          .attr('transform', 'translate('+(margin.left+15)+', '+0+')');
+                          .attr('transform', 'translate('+(margin.left+18)+', '+(margin.top+5)+')');
       var path1 = plotGroup.append('path');
       var path2 = plotGroup.append('path');
       var path3 = plotGroup.append('path');
       var areaPath1 = plotGroup.append('path');
       var areaPath2 = plotGroup.append('path');
       var areaPath3 = plotGroup.append('path');
+
+      let title = chart.append('g').attr('transform', 'translate('+(width)/2+','+margin.top+')');
+
+      title.append("text").attr("class","d3Text")
+      .attr("x", 0)
+      .attr("y", 0)
+      .attr("fill","white")
+      .attr("stroke","white")
+      .attr("stroke-width","0.1")
+      .attr("font-size","20")
+      .attr("dominant-baseline","middle")
+      .attr("text-anchor","middle")
+      .text("Live Updates");
+
+
       // Main loop
       function tick() {
   	    // Generate new data

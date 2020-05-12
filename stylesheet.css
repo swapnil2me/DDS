@@ -4,7 +4,6 @@ html {
 /* ----------------Main Flex------------------- */
 .mainPage {
   background-color: #151535;
-  flex: 1;
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -12,27 +11,31 @@ html {
 #intro{
   background: #151535;
   color: white;
+  flex: 1;
 }
 #design{
   background: #150035;
   color: white;
+  flex: 2;
 }
 #analyze{
   background: #151535;;
   color: white;
+  flex: 3;
 }
 #learn{
   background: #151500;
   color: white;
+  flex: 4;
 }
 #footer{
   background: #AA15BB;
   color: white;
+  flex: 4;
 }
 .segments{
-  flex: 1;
-  max-width: 1400px;
-  margin: 40px auto 0 auto;
+  /* max-width: 1400px; */
+  /* margin: 40px auto 0 auto; */
   background-color: #151535;
   padding: 30px 0;
   display: flex;
@@ -45,12 +48,13 @@ header{
   position: fixed;
   top: 0;
   left: 0;
-  width: 90%;
+  width: 100%;
   display: flex;
-  justify-content: space-between;
+  /* justify-content: space-between; */
+  justify-content: center;
   align-items: center;
   transition: 0.6s;
-  padding: 40px 10px;
+  padding: 20px 20px;
   z-index: 100000;
 }
 
@@ -62,6 +66,7 @@ header .title {
   font-size: 3em;
   letter-spacing: 2px;
   transition: 0.6s;
+  /* justify-content:center; */
 }
 
 header ul {
@@ -82,20 +87,26 @@ header ul li a {
   text-decoration: none;
   color: #fff;
   letter-spacing: 2px;
-  font-size: 1em;
+  font-size: 16px;
   font-weight: 500px;
   transition: 0.6s;
 }
 
-header.sticky .title,
+header.sticky .title{
+  font-size: 16px;
+  font-weight: 500px;
+  color: #000;
+  margin: 15 15px;
+}
 header.sticky ul li a {
-  font-size: 1em;
+  font-size: 12px;
   font-weight: 500px;
   color: #000;
   margin: 0 15px;
 }
 header.sticky{
-  padding: 1px 100px;
+  height: 30px;
+  padding: 1px 1px;
   background: #fff;
 }
 /* -----------------Centering On Canvas------------------ */
@@ -114,7 +125,6 @@ header.sticky{
 
 
 .fixed-size {
-
   width: 550px;
   height: 350px;
   margin-bottom: 20px;
@@ -129,45 +139,62 @@ header.sticky{
 }
 .dash-second-column{
   /* background-color: yellow; */
-  flex=1;
+  flex=2;
   display: flex;
   flex-direction: column;
-  margin-top: 30px;
+  /* margin-top: 30px; */
 }
 
 /* ---------------D3 JS-------------------- */
-line {
-  stroke: red;
+/* path {
+  stroke: white;
   fill: none;
   stroke-width: 2px;
+} */
+
+.lineC0 {
+  stroke: #e08214;
+  fill: none;
+  stroke-width: 3px;
+  transition: all 0.25s ease-out;
+}
+
+.lineC1 {
+  stroke: #41ab5d;
+  fill: none;
+  stroke-width: 1px;
   transition: all 0.5s ease-out;
 }
 
-path {
-  stroke: red;
+.lineC2 {
+  stroke: #807dba;
   fill: none;
-  stroke-width: 2px;
+  stroke-width: 1px;
+  transition: all 0.5s ease-out;
 }
+
+
 
 g.tick line{
-  stroke: red;
+  stroke: white;
 }
 
-g.tick text{
-  font-size: 12px;
-  fill: red;
-}
-
-
+/* Axis Style */
+.liveAxis path,
 .ystock path,
 .xstock path{
     fill: none;
-    stroke: #0f0;
+    stroke: #fff;
+    stroke-width:2px;
     shape-rendering: crispEdges;
 }
 
+/* Axis Label */
 .axisStock text{
-  fill: red;
+  fill: lightsteelblue;
+  font-size: 15px;
+  font-family: sans-serif;
+
 }
 
 /* .x.axis path {
@@ -180,77 +207,105 @@ g.tick text{
 }
 
 .focus circle {
-    fill: steelblue;
+    fill: lightsteelblue;
 }
 
 .toolBox text {
-    fill:yellow;
-    font-size: 11px;
+    fill:purple;
+    font-size: 15px;
+    font-family: sans-serif;
 }
 
 .toolBox-rect {
-        fill: rgba(250,250,250,0.5);
-        stroke: yellow;
+        fill: lightsteelblue;
+        stroke: darkblue;
     }
 
 .bax {
-        fill: rgba(9,9,9,0.9);
-        stroke: Red;
-    }
-
-.xGrid {
-        fill: rgba(0,200,000,0.1);
-        stroke: rgba(0,200,000,0.65);
-        stroke-width: 1px;
+        fill: lightsteelblue;
+        stroke: darkblue;
     }
 
 .baxText {
-    fill:white;
+    fill:purple;
     font-size: 15px;
-    align-content: center;
+    font-family: sans-serif;
+    /* align-content: center; */
 }
+.xGrid {
+        fill: lightsteelblue;
+        stroke: rgba(200,200,200,0.6);
+        stroke-width: 1px;
+    }
 
 .toolBox-date, .toolBox-shareValue {
-    font-weight: bold;
+    font-family: sans-serif;
+    font-size: 15px;
 }
 
 #liveChart .axis {
   font-family: sans-serif;
   fill: #d35400;
-  font-size: 12px;
+  font-size: 15px;
 }
 #liveChart .line {
   fill: none;
   stroke: rgb(250,250,0);
   stroke-width: 3px;
 }
-#liveChart .smoothline3 {
-  fill: none;
-  stroke: rgb(250,250,0);
-  stroke-width: 2px;
-}
-#liveChart .area3 {
-  fill: rgba(250,250,0,0.8);
-  opacity: 0.1;
-}
+
+    /* 100% — FF
+    95% — F2
+    90% — E6
+    85% — D9
+    80% — CC
+    75% — BF
+    70% — B3
+    65% — A6
+    60% — 99
+    55% — 8C
+    50% — 80
+    45% — 73
+    40% — 66
+    35% — 59
+    30% — 4D
+    25% — 40
+    20% — 33
+    15% — 26
+    10% — 1A
+    5% — 0D
+    0% — 00 */
+
+/* #807dba; #41ab5d; #e08214 */
+
 
 #liveChart .smoothline1 {
   fill: none;
-  stroke: rgb(250,0,250);
+  stroke: #e08214;
   stroke-width: 2px;
 }
 #liveChart .area1 {
-  fill: rgba(250,0,250,0.8);
+  fill: #e08214;
   opacity: 0.1;
 }
 
 #liveChart .smoothline2 {
   fill: none;
-  stroke: rgb(0,250,250);
+  stroke: #41ab5d;
   stroke-width: 2px;
 }
 #liveChart .area2 {
-  fill: rgba(0,250,250,0.8);
+  fill: #41ab5d;
+  opacity: 0.01;
+}
+
+#liveChart .smoothline3 {
+  fill: none;
+  stroke: #807dba;
+  stroke-width: 2px;
+}
+#liveChart .area3 {
+  fill: #807dba;
   opacity: 0.1;
 }
 
@@ -265,10 +320,13 @@ g.tick text{
   fill: none;
 }
 
-/*  */
+/*---------------------Pie-Dash Board----------------- */
+.pieChartGroup {
+    margin-top: 50px;
+}
 .dashPath {  stroke: #fff; }
 .dashPath :hover {  opacity:0.9; }
-.dashRect:hover {  fill:blue; }
+.dashRect:hover {  fill:red; }
 .dashAxis {  font: 10px sans-serif; }
 .legend tr{    border-bottom:1px solid grey; }
 .legend tr:first-child{    border-top:1px solid grey; }
@@ -295,9 +353,15 @@ g.tick text{
     align:right;
     width:50px;
 }
-.dashRectText,.dashAxis,
+.dashRectText,.x .dashAxis,
 .legendFreq  {
   stroke: white;
+  fill: white;
+  font: 14px sans-serif;
+}
+
+g.tick text{
+  font-size: 14px;
   fill: white;
 }
 
@@ -310,9 +374,9 @@ td{
   font: 35px sans-serif;
 }
 .pi-title{
-  stroke: white;
+  /* stroke: white; */
   fill:white;
-  font: 17px sans-serif;
+  font: 20px sans-serif;
 }
 .dashBarBox{
   fill:red;
