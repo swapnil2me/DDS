@@ -180,11 +180,6 @@ header.sticky{
 }
 
 /* ---------------D3 JS-------------------- */
-/* path {
-  stroke: white;
-  fill: none;
-  stroke-width: 2px;
-} */
 
 .lineC0 {
   stroke: #e08214;
@@ -433,17 +428,17 @@ td{
 }
 .listen-second-column{
   flex: 1;
-  background: red;
+  background: white;
   display: flex;
   flex-direction: column;
 }
 .rawdata{
   height: 500px;
   width: 500px;
-  background-color: red;
+  /* background-color: red; */
 }
 .subtracted{
-  height: 500px;
+  height: 550px;
   width: 500px;
   background-color: green;
 }
@@ -455,7 +450,7 @@ td{
 .subtractBtn{
   flex:1;
   align-items: center;
-  background-color: red;
+  /* background-color: red; */
 }
 .extractBtn{
   flex:1;
@@ -467,4 +462,25 @@ td{
   flex:1;
   align-items: center;
   background-color: blue;
+}
+
+
+.graphContainer path {
+  stroke: red;
+  fill: none;
+  /* stroke-width: 2px; */
+}
+
+.listenAxis,.listenAxis path {
+  stroke: black;
+  fill: none;
+  stroke-width: 2px;
+}
+
+.colorMapPhs {
+
+    height: 400px;
+    width: 400px;
+    margin: 50px;
+
 }

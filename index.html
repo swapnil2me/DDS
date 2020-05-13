@@ -87,24 +87,35 @@
           </div>
           <div class="extractBtn">
               <button type="button" id="extract">extract peaks</button>
+              <p>Fx: <span id="fxCV"></span></p>
+              <input type="range" id="fx" name="" value="0" min="0" max="200">
+              <p>Fy: <span id="fyCV"></span></p>
+              <input type="range" id="fy" name="" value="0"  min="0" max="200">
+              <p>Quad: <span id="quadCV"></span></p>
+              <input type="range" id="quad" name="" value="10"  min="-20" max="20">
+              <p>4th: <span id="cubCV"></span></p>
+              <input type="range" id="cub" name="" value="10"  min="-20" max="20">
+              <p>Loss: <span id="lossCV"></span></p>
           </div>
           <div class="fitBtn">
               <button type="button" id="fit">fit curve</button>
+              <button type="button" id="clear">clear Data</button>
           </div>
 
         </div>
         <div class="listen-second-column">
           <div class="rawdata">
-            raw data
+
           </div>
           <div class="subtracted">
-            good data
+            <!-- <img class="colorMapPhs" src="amp.png" alt=""> -->
           </div>
           <div class="agoodfit">
             good fit
           </div>
         </div>
       </div>
+      <script src="https://d3js.org/d3-contour.v1.min.js"></script>
       <script src="listen.js" charset="utf-8"></script>
     </div>
 
