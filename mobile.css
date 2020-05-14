@@ -2,6 +2,7 @@ body {
       font: 400 15px Lato, sans-serif;
       line-height: 1.8;
       color: #000;
+      min-width: 600px;
   }
   h1 {
     color: #7a0177;
@@ -38,7 +39,7 @@ body {
       text-align: justify;
   }
   .jumbotron {
-      background-color: #fff;
+      background-color: #fee8c8;
       color: #7a0177;
       padding: 100px 25px;
       font-family: Montserrat, sans-serif;
@@ -135,7 +136,7 @@ body {
   }
   .navbar {
       margin-bottom: 0;
-      background-color: #fff;
+      background-color: #fee8c8;
       z-index: 9999;
       border: 0;
       font-size: 12px !important;
@@ -188,21 +189,7 @@ body {
       -webkit-transform: translateY(0%);
     }
   }
-  @media screen and (max-width: 768px) {
-    .col-sm-4 {
-      text-align: center;
-      margin: 25px 0;
-    }
-    .btn-lg {
-        width: 100%;
-        margin-bottom: 35px;
-    }
-  }
-  @media screen and (max-width: 480px) {
-    .logo {
-        font-size: 150px;
-    }
-  }
+
   /* ============================== */
 #dashboard{
   width: 350px;
@@ -550,5 +537,54 @@ td{
 
 .slider{
   flex: 1;
+  margin: 30px 10px 0px 10px;
+
+  font-size: 15px;
+}
+.slider-value{
+    color: #7a0177;
+    background-color: #fee8c8;
+}
+
+.listen-segmentBody{
+  display: grid;
+  grid-template-columns: 1fr 1fr 2fr;
+
+}
+
+.listen-first-column{
+  display: grid;
+}
+
+.equation{
+  grid-column: 1/4;
   margin: 10px;
 }
+
+.equation p{
+  font-size: 20px;
+  line-height: 1.375em;
+  font-weight: 400;
+  margin-bottom: 5px;
+  text-align: justify;
+  font-weight: bold;
+}
+
+
+
+/* ============== */
+/* @media screen and (max-width: 768px) {
+  .col-sm-4 {
+    text-align: center;
+    margin: 25px 0;
+  }
+  .btn-lg {
+      width: 100%;
+      margin-bottom: 35px;
+  }
+}
+@media screen and (max-width: 480px) {
+  .logo {
+      font-size: 150px;
+  }
+} */
