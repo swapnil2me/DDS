@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MobileSite</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js" charset="utf-8"></script>
+
+    <link rel="stylesheet" href="mobile.css">
+    <!-- <link rel="stylesheet" href="stylesheet.css"> -->
+    <script src="//d3js.org/d3.v4.min.js"></script>
+  </head>
+  <body>
+    <header class="navbar">
+      <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+              <span class="glyphicon glyphicon-option-horizontal"></span>
+            </button>
+          </div>
+          <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav navbar-right">
+              <!-- <li><a href="#design">Design</a></li> -->
+              <li><a href="#analyze">Watch</a></li>
+              <li><a href="#learn">Listen</a></li>
+              <!-- <li><a href="#train">Train</a></li> -->
+              <li><a href="#footer">Contact</a></li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+
+      <div id="intro" class="jumbotron text-center">
+        <h1>AiryZoka</h1>
+        <h3>One stop solution for all your degital analytics</h3>
+        <h3>Focus on your goals while we work for your degital solutions</h3>
+        <div id="introParticles">
+
+        </div>
+      </div>
+
+      <!-- <div id="design" class="container-fluid text-center">
+        <h2>Design</h2>
+        <p>Researcher</p>
+        <p> I am a PhD student at Indian Institute of Science, Bangalore. I have been working on nonlinear dynamics of Nano Electromechanical Systems (NEMS) for last 5 years. During this period have have designed and implemented various experiments on NEMS.
+      I have also developed keen interest in computer science during my spare time. I am a self-taught programmer in Python, JavaScript, HTML, C, C++. I have used these programming skills primarily in instrument control and data analysis of my experiments on NEMS.
+      I am Machine Learning engineer in making. I am fascinated with the recent developments in the field of ML. I hoping to be the part of this technological revolution. </p><br>
+        <br>
+      </div> -->
+      <div id="analyze" class="container-fluid ">
+        <h2>Watch</h2>
+        <div class="segmentHead">
+          <h3>Your Data Grow</h3>
+          <p>Get a dashboard for your data! Be it your business data or from your IoT hub.
+          Monitor your data in real time! We specialize in separating different layers off your data.
+          Each layer can be visualized effectively to bring out its true meanig.
+          With out visualization tools you will never miss out on any hidden detail.</p>
+          <p>Take a look at toy example below.
+          It demonstrates our ability represent messy data in clean and efficient manner.
+          It needs at least 1080px for best view. But of course it is resposive for other sizes as well!
+          </p>
+        </div>
+        <div class="segmentBody">
+
+          <div class="dash-first-column">
+            <div id='dashboard' class="fixed-size-charts">
+            </div>
+            <div id='pieChart' class="fixed-size-charts">
+            </div>
+          </div>
+
+          <div class="dash-second-column">
+            <div id="linePlot" class="fixed-size-charts">
+              <script type="text/javascript" src="prices.js"></script>
+            </div>
+
+            <div id="liveChart" class="fixed-size-charts">
+              <script type="text/javascript" src="liveChart.js"></script>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+      <div id="learn" class="container-fluid">
+        <h2>Listen</h2>
+        <div class="segmentHead">
+          <h3>To Your Data</h3>
+          <p>Off course we dont stop at visualizing the data! We offer even more!</p>
+          <p>Each data point has something to say. We just give you the hearing aid that you may need.
+            Listen to what your data has to say.</p>
+          <!-- <p>We </p> -->
+          <p>You might learn just the thing which you need the most by effectively listening !</p>
+        </div>
+        <div class="listen-segmentBody">
+          <div class="listen-first-column text-center">
+
+            <div class="extractBtn">
+              <br>
+                <p>y = <span id="fyCV"></span> + 0(x -<span id="fxCV"></span>) +
+                       <span id="quadCV"></span>(x -<span id="fxCV1"></span>)^2+
+                       <span id="cubCV"></span>(x -<span id="fxCV2"></span>)^4
+                </p>
+
+                <div class="equationInputs">
+                  <div class="slider">
+                    <input type="range" id="fx" name="fx" value="150" min="0" max="200">
+                    <label for="fx">Horizontal Shift</label>
+                  </div>
+
+                  <div class="slider">
+                    <input type="range" id="fy" name="fy" value="90"  min="0" max="200">
+                    <label for="fy">Verticle Shift</label>
+                  </div>
+
+                  <div class="slider">
+                    <input type="range" id="quad" name="quad" value="50"  min="-400" max="400">
+                    <label for="quad">Quadratic Strength</label>
+                  </div>
+
+                  <div class="slider">
+                    <input type="range" id="cub" name="4th" value="0"  min="-40" max="40">
+                    <label for="cub">The Fourth!</label>
+                  </div>
+
+                </div>
+
+                <p>Loss: <span id="lossCV"></span></p>
+            </div>
+            <br>
+            <div class="fitBtn">
+                <button type="button" id="fit">fit curve</button>
+                <button type="button" id="clear">clear Data</button>
+            </div>
+
+          </div>
+          <div class="listen-second-column text-center">
+            <div class="subtracted">
+              <!-- <img class="colorMapPhs" src="amp.png" alt=""> -->
+            </div>
+            <div class="agoodfit">
+              a good fit
+            </div>
+          </div>
+        </div>
+        <script src="https://d3js.org/d3-contour.v1.min.js"></script>
+        <script src="listen.js" charset="utf-8"></script>
+      </div>
+      <div id="train" class="container-fluid text-center">
+        <!-- <h2>Train</h2> -->
+      </div>
+      <div id="footer" class="container-fluid text-center">
+        <!-- <h2>About Us</h2>
+        <p> I am a PhD student at Indian Institute of Science, Bangalore. I have been working on nonlinear dynamics of Nano Electromechanical Systems (NEMS) for last 5 years. During this period have have designed and implemented various experiments on NEMS.
+      I have also developed keen interest in computer science during my spare time. I am a self-taught programmer in Python, JavaScript, HTML, C, C++. I have used these programming skills primarily in instrument control and data analysis of my experiments on NEMS.
+      I am Machine Learning engineer in making. I am fascinated with the recent developments in the field of ML. I hoping to be the part of this technological revolution. </p><br>
+        <br> -->
+      </div>
+
+      <script>
+        particlesJS.load('introParticles','particlesLightBg.json',function() {});
+        $(document).ready(function(){
+          // Add smooth scrolling to all links in navbar + footer link
+          $(".navbar a, footer a[href='#myPage']").on('click', function(event) {
+
+            // Prevent default anchor click behavior
+            event.preventDefault();
+
+            // Store hash
+            var hash = this.hash;
+
+            // Using jQuery's animate() method to add smooth page scroll
+            // The optional number (900) specifies the number of milliseconds it takes to scroll to the specified area
+            $('html, body').animate({
+              scrollTop: $(hash).offset().top
+            }, 500, function(){
+
+              // Add hash (#) to URL when done scrolling (default click behavior)
+              window.location.hash = hash;
+            });
+          });
+
+          // Slide in elements on scroll
+          $(window).scroll(function() {
+            $(".slideanim").each(function(){
+              var pos = $(this).offset().top;
+
+              var winTop = $(window).scrollTop();
+                if (pos < winTop + 600) {
+                  $(this).addClass("slide");
+                }
+            });
+          });
+
+          // Collapse nav side-button
+          $('.navbar-nav>li>a').on('click', function(){
+              $('.navbar-collapse').collapse('hide');
+          });
+        })
+        </script>
+  </body>
+</html>

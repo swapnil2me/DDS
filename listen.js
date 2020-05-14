@@ -40,35 +40,35 @@ d3.tsv("phase_bkg.tsv",(error,phase) => {
                 .x(function(d){ return xScaleListen(d.x); })
                 .y(function(d){ return yScaleListen(d.y); });
 
-  let lineSVG = d3.select(".rawdata").append("svg").attr("height","100%").attr("width","100%");
-
-  let graphContainer = lineSVG.append("g")
-                          .attr("class","graphContainer")
-                          .attr("transform","translate("+0+","+heightListen+")rotate(270)");
-
-  graphContainer.append("g").attr("class", "listenAxis")
-                            .attr("transform","translate("+(marginListen.left)+","+(heightListen-marginListen.bottom)+")")
-                            // .attr("stroke","black")
-                            .call(xAxisListen.ticks(5));
-  graphContainer.append("g").attr("class", "listenAxis")
-                            .attr("transform","translate("+(marginListen.left)+","+marginListen.bottom+")")
-                            // .attr("stroke","black")
-                            .call(yAxisListen.ticks(5));
-
-  // console.log(singleData);
-  // lineSVG.append('path').datum(singleData)
-  //             .attr('class', 'grid').attr("stroke","black")
-  //             .attr('d', smoothLineListen);
-
-  let listenPath = graphContainer.append("g")
-                                 .attr("transform","translate("+(marginListen.left)+","+(marginListen.top)+")");
-
-  dataListen.forEach((item, i) => {
-    let sdt = item.map((e,v) => {
-      return {"x":e.x,"y":e.y + i*1.25}
-    })
-    listenPath.append("path").attr("d",smoothLineListen(sdt)).attr("stroke-width","0.5px");
-  });
+  // let lineSVG = d3.select(".rawdata").append("svg").attr("height","100%").attr("width","100%");
+  //
+  // let graphContainer = lineSVG.append("g")
+  //                         .attr("class","graphContainer")
+  //                         .attr("transform","translate("+0+","+heightListen+")rotate(270)");
+  //
+  // graphContainer.append("g").attr("class", "listenAxis")
+  //                           .attr("transform","translate("+(marginListen.left)+","+(heightListen-marginListen.bottom)+")")
+  //                           // .attr("stroke","black")
+  //                           .call(xAxisListen.ticks(5));
+  // graphContainer.append("g").attr("class", "listenAxis")
+  //                           .attr("transform","translate("+(marginListen.left)+","+marginListen.bottom+")")
+  //                           // .attr("stroke","black")
+  //                           .call(yAxisListen.ticks(5));
+  //
+  // // console.log(singleData);
+  // // lineSVG.append('path').datum(singleData)
+  // //             .attr('class', 'grid').attr("stroke","black")
+  // //             .attr('d', smoothLineListen);
+  //
+  // let listenPath = graphContainer.append("g")
+  //                                .attr("transform","translate("+(marginListen.left)+","+(marginListen.top)+")");
+  //
+  // dataListen.forEach((item, i) => {
+  //   let sdt = item.map((e,v) => {
+  //     return {"x":e.x,"y":e.y + i*1.25}
+  //   })
+  //   listenPath.append("path").attr("d",smoothLineListen(sdt)).attr("stroke-width","0.5px");
+  // });
 
 // ##############################################
   let yScaleGip = d3.scaleLinear().domain([0,maxXListen]).range([475,0]);
@@ -255,7 +255,7 @@ function connectTheDots() {
     quad = +quadSlider.value / thesecondbe;
     cub = +cubSlider.value / theforthbe;
     // console.log(fx,fy,quad,cub);
-    console.log(fitabsisa,gridData);
+    // console.log(fitabsisa,gridData);
     gridDataFit.append("path").attr("d",smoothFitGridData(fitabsisa))
                 .attr("stroke-width","2px")
                 .attr("fill","none")
@@ -263,6 +263,7 @@ function connectTheDots() {
 
     computeLoss();
   }
+
 
   let lossCV = document.getElementById("lossCV");
 
@@ -303,7 +304,7 @@ function connectTheDots() {
 
 
   clear.addEventListener('click',function subtract() {
-    console.log('fit');
+    // console.log('fit');
 
     fxSlider.value = 125;
     fySlider.value = 0;
@@ -328,4 +329,6 @@ function connectTheDots() {
                                   .attr("transform","translate("+(0)+","+(0)+")");
    gridData = [];
   },false);
+
+  drawFit();
 })

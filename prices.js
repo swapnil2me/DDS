@@ -146,7 +146,7 @@ d3.tsv("swap.tsv", function (error,tsvData) {
           .attr("y", 8)
           .attr("dy", ".71em")
           .style("text-anchor", "end")
-          .text("Price in USD");
+          .text("Price in INR");
 
           //
 
@@ -322,8 +322,8 @@ d3.tsv("swap.tsv", function (error,tsvData) {
       // }
   }
   function dashboard(id, fData){
-      var barColor = 'steelblue';
-      function segColor(c){ return {P0:"#807dba", P1:"#e08214",P2:"#41ab5d"}[c]; }
+      var barColor = '#bdbdbd';
+      function segColor(c){ return {P0:"#7570b3", P1:"#d95f02",P2:"#e7298a"}[c]; }
 
       // compute total for each state.
       fData.forEach(function(d){d.total=d.freq.P0+d.freq.P1+d.freq.P2;});

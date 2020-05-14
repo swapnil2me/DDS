@@ -41,7 +41,9 @@ html {
 }
 .segments{
   max-width: 900px;
-  /* margin: 40px auto 0 auto; */
+  /* margin-top: 250px; */
+  margin-left: 100px;
+  margin-right: 100px;
   background-color: #151535;
   padding: 30px 0;
   display: flex;
@@ -54,7 +56,7 @@ html {
   flex:1;
   display: flex;
   flex-direction: column;
-  margin: 50px
+  /* margin: 50px */
 }
 .segmentBody{
   flex:1;
@@ -108,6 +110,8 @@ html {
 }
 /* -----------------Centering On Canvas------------------ */
 .containerCanvas {
+  margin-left: 100px;
+  margin-right: 100px;
   position: relative;
   text-align: center;
 }
@@ -190,14 +194,14 @@ header.sticky{
 /* ---------------D3 JS-------------------- */
 
 .lineC0 {
-  stroke: #e08214;
+  stroke: #d95f02;
   fill: none;
   stroke-width: 3px;
   transition: all 0.25s ease-out;
 }
 
 .lineC1 {
-  stroke: #41ab5d;
+  stroke: #e7298a;
   fill: none;
   stroke-width: 1px;
   transition: all 0.5s ease-out;
