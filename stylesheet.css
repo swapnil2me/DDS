@@ -40,7 +40,7 @@ html {
   flex: 4;
 }
 .segments{
-  /* max-width: 1400px; */
+  max-width: 900px;
   /* margin: 40px auto 0 auto; */
   background-color: #151535;
   padding: 30px 0;
@@ -65,10 +65,18 @@ html {
 
 
 .fixed-size {
-  width: 550px;
-  height: 350px;
-  margin-bottom: 20px;
+  width: 350px;
+  height: 250px;
+  /* margin-bottom: 20px; */
   flex: 2;
+}
+
+.fixed-size-charts {
+  /* width: 150px; */
+  /* height: 450px; */
+  /* margin-bottom: 20px; */
+  /* flex: 1; */
+  display: flex;
 }
 
 .dash-first-column{
@@ -81,22 +89,22 @@ html {
   flex-direction: column;
   padding-left: 30px;
 }
-@media (min-width: 1080px) {
+@media (min-width: 800px) {
   .dash-first-column{
     flex-direction: row;
   }
 }
 .dash-second-column{
   /* background-color: yellow; */
-  margin: 00px 20px 20px 20px;
+  /* margin: 00px 20px 20px 20px; */
   flex=2;
   display: flex;
   flex-wrap: wrap;
-  /* flex-direction: column; */
+  /* flex-direction: row; */
   /* margin-top: 30px; */
 }
 .pieChartGroup{
-  margin-left: 50px;
+  margin-left: 10px;
 }
 /* -----------------Centering On Canvas------------------ */
 .containerCanvas {
@@ -351,12 +359,12 @@ g.tick line{
 
 /*---------------------Pie-Dash Board----------------- */
 .pieChartGroup {
-    margin-top: 50px;
+    margin-top: 40px;
 }
 .dashPath {  stroke: #fff; }
 .dashPath :hover {  opacity:0.9; }
 .dashRect:hover {  fill:red; }
-.dashAxis {  font: 10px sans-serif; }
+/* .dashAxis {  font: 10px sans-serif; } */
 .legend tr{    border-bottom:1px solid grey; }
 .legend tr:first-child{    border-top:1px solid grey; }
 
@@ -369,28 +377,32 @@ g.tick line{
 
 .x.dashAxis path {  display: none; }
 .legend{
-    margin-bottom:50px;
+    margin-bottom:5px;
     display:inline-block;
     border-collapse: collapse;
     border-spacing: 0px;
 }
 .legend td{
-    padding:4px 5px;
+    padding:2px 3px;
     vertical-align:bottom;
 }
-.legendFreq, .legendPerc{
+.legendRec, .legendFreq, .legendPerc{
     align:right;
-    width:50px;
+    width:15px;
+    stroke: white;
+    fill: white;
+    font: 12px sans-serif;
 }
-.dashRectText,.x .dashAxis,
-.legendFreq  {
-  stroke: white;
+.dashRectText,.x .dashAxis  {
+  /* stroke: white; */
+  stroke-width:1px;
   fill: white;
-  font: 14px sans-serif;
+  font: 8px monospace;
 }
 
+
 g.tick text{
-  font-size: 14px;
+  font-size: 12px;
   fill: white;
 }
 
@@ -399,8 +411,9 @@ td{
 }
 .hg-title{
   stroke: white;
+  stroke-width:1px;
   fill:white;
-  font: 35px sans-serif;
+  font: 25px sans-serif;
 }
 .pi-title{
   /* stroke: white; */

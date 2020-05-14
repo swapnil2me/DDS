@@ -1,6 +1,6 @@
 var marginStocks = { top: 30, right: 30, bottom: 50, left: 50 },
-    widthStocks = 550 - marginStocks.left - marginStocks.right,
-    heightStocks = 350 - marginStocks.top - marginStocks.bottom;
+    widthStocks = 450 - marginStocks.left - marginStocks.right,
+    heightStocks = 287 - marginStocks.top - marginStocks.bottom;
 var xBaxWidth = widthStocks/5.5;
 var yBaxWidth = heightStocks/7;
 var bottomShift = yBaxWidth / 1.5;
@@ -172,8 +172,8 @@ d3.tsv("swap.tsv", function (error,tsvData) {
 
       focusBox.append("rect")
           .attr("class", "toolBox-rect")
-          .attr("width", widthStocks/5.5)
-          .attr("height", heightStocks/6)
+          .attr("width", widthStocks/4.5)
+          .attr("height", heightStocks/4.5)
           .attr("x", 10)
           .attr("y", -22)
           .attr("rx", 4)
@@ -221,7 +221,7 @@ d3.tsv("swap.tsv", function (error,tsvData) {
 
       xBox.append("rect")
           .attr("class", "bax")
-          .attr("width", xBaxWidth/1.5)
+          .attr("width", xBaxWidth/1.25)
           .attr("height", yBaxWidth/1.5)
           .attr("x", -0.35*xBaxWidth)
           .attr("y", -0.47*yBaxWidth)
@@ -230,16 +230,16 @@ d3.tsv("swap.tsv", function (error,tsvData) {
 
       yBox.append("rect")
           .attr("class", "bax")
-          .attr("width", yBaxWidth)
-          .attr("height", xBaxWidth/3)
-          .attr("x", -1.1*yBaxWidth)
+          .attr("width", yBaxWidth*1.25)
+          .attr("height", xBaxWidth/2.8)
+          .attr("x", -1.35*yBaxWidth)
           .attr("y", -0.15*xBaxWidth)
           .attr("rx", 4)
           .attr("ry", 4);
 
       yBox.append("text")
           .attr("class", "baxText")
-          .attr("x", -0.45*xBaxWidth)
+          .attr("x", -0.5*xBaxWidth)
           .attr("y", 7);
 
       xBox.append("text")
@@ -331,8 +331,8 @@ d3.tsv("swap.tsv", function (error,tsvData) {
       // function to handle histogram.
       function histoGram(fD){
           var hG={},    hGDim = {t: 100, r: 0, b: 30, l: 0};
-          hGDim.w = 500 - hGDim.l - hGDim.r,
-          hGDim.h = 300 - hGDim.t - hGDim.b;
+          hGDim.w = 350 - hGDim.l - hGDim.r,
+          hGDim.h = 250 - hGDim.t - hGDim.b;
 
           //create svg for histogram.
           var hGsvg = d3.select(id).append("svg")
@@ -341,7 +341,7 @@ d3.tsv("swap.tsv", function (error,tsvData) {
               .attr("transform", "translate(" + hGDim.l + "," + hGDim.t + ")");
 
           // create function for x-axis mapping.
-          var xScaleHist = d3.scaleBand().range([0, hGDim.w]).paddingInner(0.1)
+          var xScaleHist = d3.scaleBand().range([0, hGDim.w]).paddingInner(0.2)
                   .domain(fD.map(function(d) { return d[0]; }));
 
           // Add x-axis to the histogram svg.
@@ -438,17 +438,18 @@ d3.tsv("swap.tsv", function (error,tsvData) {
       // function to handle pieChart.
       function pieChart(pD){
           piePadding = {t: 50, r: 0, b: 0, l: 0};
-          var pC ={},    pieDim ={w:250, h: 250+piePadding.t};
+          var pC ={},    pieDim ={w:150, h: 150+piePadding.t};
           pieDim.r = Math.min(pieDim.w, pieDim.h) / 2;
 
+          let piID = "#pieChart";
           // create svg for pie chart.
-          var piesvg = d3.select(id).append("svg").attr("class","pieChartGroup")
+          var piesvg = d3.select(piID).append("svg").attr("class","pieChartGroup")
               .attr("width", pieDim.w).attr("height", pieDim.h).append("g")
               .attr("transform", "translate("+pieDim.w/2+","+(pieDim.h/2+piePadding.t/2)+")");
 
           piesvg.append("text").attr("class","pi-title").text("Market Share")
                                                                   .attr("x",0)
-                                                                  .attr("y",-130)
+                                                                  .attr("y",-100)
                                                                   .attr("text-anchor", "middle");
 
           // create function to draw the arcs of the pie slices.
@@ -503,18 +504,19 @@ d3.tsv("swap.tsv", function (error,tsvData) {
           var leg = {};
 
           // create table for legend.
-          var legend = d3.select(id).append("table").attr('class','legend');
+          let legID = "#pieChart"
+          var legend = d3.select(legID).append("table").attr('class','legend');
 
           // create one row per segment.
           var tr = legend.append("tbody").selectAll("tr").data(lD).enter().append("tr");
 
           // create the first column for each segment.
-          tr.append("td").append("svg").attr("width", '16').attr("height", '16').append("rect")
-              .attr("width", '16').attr("height", '16')
+          tr.append("td").append("svg").attr("width", '12').attr("height", '12').append("rect")
+              .attr("width", '12').attr("height", '12')
         .attr("fill",function(d){ return segColor(d.type); });
 
           // create the second column for each segment.
-          tr.append("td").text(function(d){ return d.type;});
+          tr.append("td").attr("class",'legendRec').text(function(d){ return d.type;});
 
           // create the third column for each segment.
           tr.append("td").attr("class",'legendFreq')

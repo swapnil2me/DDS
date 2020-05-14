@@ -47,14 +47,16 @@
         <div class="dash-first-column">
           <div id='dashboard' class="fixed-size">
           </div>
+          <div id='pieChart' class="fixed-size">
+          </div>
         </div>
 
         <div class="dash-second-column">
-          <div id="linePlot" class="fixed-size">
+          <div id="linePlot" class="fixed-size-charts">
             <script type="text/javascript" src="prices.js"></script>
           </div>
 
-          <div id="liveChart" class="fixed-size">
+          <div id="liveChart" class="fixed-size-charts">
             <script type="text/javascript" src="liveChart.js"></script>
           </div>
         </div>
@@ -83,18 +85,21 @@
         <div class="listen-first-column">
 
           <div class="subtractBtn">
-              <button type="button" id="subtract">remove background</button>
+
           </div>
           <div class="extractBtn">
-              <button type="button" id="extract">extract peaks</button>
-              <p>Fx: <span id="fxCV"></span></p>
-              <input type="range" id="fx" name="" value="0" min="0" max="200">
-              <p>Fy: <span id="fyCV"></span></p>
-              <input type="range" id="fy" name="" value="0"  min="0" max="200">
-              <p>Quad: <span id="quadCV"></span></p>
-              <input type="range" id="quad" name="" value="10"  min="-20" max="20">
-              <p>4th: <span id="cubCV"></span></p>
-              <input type="range" id="cub" name="" value="10"  min="-20" max="20">
+              <p>y = <span id="fyCV"></span> + 0(x -<span id="fxCV"></span>) +
+                     <span id="quadCV"></span>(x -<span id="fxCV1"></span>)^2+
+                     <span id="cubCV"></span>(x -<span id="fxCV2"></span>)^4
+              </p>
+
+              <input type="range" id="fx" name="fx" value="0" min="0" max="200">
+
+              <input type="range" id="fy" name="fy" value="0"  min="0" max="200">
+
+              <input type="range" id="quad" name="quad" value="10"  min="-400" max="400">
+
+              <input type="range" id="cub" name="4th" value="0"  min="-40" max="40">
               <p>Loss: <span id="lossCV"></span></p>
           </div>
           <div class="fitBtn">

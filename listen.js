@@ -1,7 +1,5 @@
 d3.tsv("phase_bkg.tsv",(error,phase) => {
-  let subtract = document.querySelector("#subtract");
-  let extract = document.querySelector("#extract");
-  let fit = document.querySelector("#fit");
+    let fit = document.querySelector("#fit");
   let clear = document.querySelector("#clear");
 
   let marginListen = {left:40, right:20, top:100, bottom:100};
@@ -24,13 +22,13 @@ d3.tsv("phase_bkg.tsv",(error,phase) => {
 
 
   let singleData = dataListen[0];
-  console.log(singleData);
+  // console.log(singleData);
 
   let maxXListen = d3.max(singleData,function(d){return d.x; });
   let maxYListen = d3.max(singleData,function(d){return d.y; }) + 1*dataListen.length;
   let minYListen = d3.min(singleData,function(d){return d.y; });
 
-  console.log(maxYListen,maxXListen);
+  // console.log(maxYListen,maxXListen);
 
   let yScaleListen = d3.scaleLinear().domain([minYListen,250]).range([(heightListen-marginListen.top-marginListen.bottom),0]);
   let xScaleListen = d3.scaleLinear().domain([0,maxXListen]).range([0,(widthListen-marginListen.left-marginListen.right)]);
@@ -57,7 +55,7 @@ d3.tsv("phase_bkg.tsv",(error,phase) => {
                             // .attr("stroke","black")
                             .call(yAxisListen.ticks(5));
 
-  console.log(singleData);
+  // console.log(singleData);
   // lineSVG.append('path').datum(singleData)
   //             .attr('class', 'grid').attr("stroke","black")
   //             .attr('d', smoothLineListen);
@@ -109,7 +107,7 @@ d3.tsv("phase_bkg.tsv",(error,phase) => {
 
   var ximgGrid = gipContainer.append("g").attr("class", "imgGrid").style("display", "null");
   ximgGrid.append("rect")
-      .attr("class", "xGrid")
+      .attr("class", "xGridListen")
       .attr("width", 0.5)
       .attr("height", 475)
       .attr("x", 0.0)
@@ -117,7 +115,7 @@ d3.tsv("phase_bkg.tsv",(error,phase) => {
 
   var yimgGrid = gipContainer.append("g").attr("class", "Grid").style("display", "null");
   yimgGrid.append("rect")
-      .attr("class", "xGrid")
+      .attr("class", "xGridListen")
       .attr("width", 475/1.5)
       .attr("height", 0.5)
       .attr("x", 0.0)
@@ -135,9 +133,9 @@ d3.tsv("phase_bkg.tsv",(error,phase) => {
     // .transition().duration(100).select(".gridO")
     // imgfocus.select(".gridO")
     //         .attr("transform", "translate(" + d3.mouse(this)[0] + "," + d3.mouse(this)[1] + ")");
-    ximgGrid.select(".xGrid")
+    ximgGrid.select(".xGridListen")
           .attr("transform","translate(" + (d3.mouse(this)[0]-5) + "," + (0) + ")");
-    yimgGrid.select(".xGrid")
+    yimgGrid.select(".xGridListen")
           .attr("transform","translate(" + (0) + "," + (d3.mouse(this)[1]-5) + ")");
   }
 
@@ -153,6 +151,8 @@ d3.tsv("phase_bkg.tsv",(error,phase) => {
         .on("click",removeImgFocus);
 
   gridData.push({x:(d3.mouse(this)[0]-5),y:(d3.mouse(this)[1]-5)});
+  computeLoss();
+  connectTheDots();
   }
   function removeImgFocus() {
     this.remove()
@@ -161,31 +161,29 @@ d3.tsv("phase_bkg.tsv",(error,phase) => {
 
 // ##############################################
 
+let gridDataPath = gipContainer.append("g")
+                               .attr("transform","translate("+(0)+","+(0)+")");
 
+let gridDataFit = gipContainer.append("g")
+                              .attr("transform","translate("+(0)+","+(0)+")");
 
-  subtract.addEventListener('click',function subtract() {
-    console.log('subtract');
-    gridData.sort((a, b) => {return a.x>b.x});
-    console.log(gridData);
-      // phase.forEach((item, i) => {
-      //   console.log(Object.keys(item));
-      // });
-
-      // console.log(zeroIndex);
-
-  },false);
-
-  let gridDataPath = gipContainer.append("g")
+function connectTheDots() {
+  // console.log('extract');
+  gridDataPath.remove();
+  gridDataPath = gipContainer.append("g")
                                  .attr("transform","translate("+(0)+","+(0)+")");
+  gridData.sort((a, b) => {return a.x>b.x});
+  gridDataPath.append("path").attr("d",smoothLineGridData(gridData))
+              .attr("stroke-width","1px")
+              .attr("fill","none")
+              .attr("stroke","white");
+}
 
-  extract.addEventListener('click',function subtract() {
-    console.log('extract');
-    gridData.sort((a, b) => {return a.x>b.x});
-    gridDataPath.append("path").attr("d",smoothLineGridData(gridData))
-                .attr("stroke-width","1px")
-                .attr("fill","none")
-                .attr("stroke","white");
-  },false);
+
+
+
+
+
 
   let fx,fy,quad,cub;
 
@@ -195,6 +193,8 @@ d3.tsv("phase_bkg.tsv",(error,phase) => {
 
   let fxSlider = document.getElementById("fx");
   let fxOP = document.getElementById("fxCV");
+  let fxOP1 = document.getElementById("fxCV1");
+  let fxOP2 = document.getElementById("fxCV2");
   let fySlider = document.getElementById("fy");
   let fyOP = document.getElementById("fyCV");
   let quadSlider = document.getElementById("quad");
@@ -202,14 +202,23 @@ d3.tsv("phase_bkg.tsv",(error,phase) => {
   let cubSlider = document.getElementById("cub");
   let cubOP = document.getElementById("cubCV");
 
+
+  let theforthbe = 100000000;
+  let thesecondbe = 10000;
+
+
   fxOP.innerHTML = +fxSlider.value;
+  fxOP1.innerHTML = +fxSlider.value;
+  fxOP2.innerHTML = +fxSlider.value;
   fyOP.innerHTML = +fySlider.value;
-  quadOP.innerHTML = +quadSlider.value/1000;
-  cubOP.innerHTML = +cubSlider.value;
+  quadOP.innerHTML = +quadSlider.value/thesecondbe;
+  cubOP.innerHTML = +cubSlider.value/theforthbe;
 
   fxSlider.oninput = () => {
     drawFit();
     fxOP.innerHTML = +fxSlider.value;
+    fxOP1.innerHTML = +fxSlider.value;
+    fxOP2.innerHTML = +fxSlider.value;
   }
 
   fySlider.oninput = () => {
@@ -219,12 +228,12 @@ d3.tsv("phase_bkg.tsv",(error,phase) => {
 
   quadSlider.oninput = () => {
     drawFit();
-    quadOP.innerHTML = +quadSlider.value/1000;
+    quadOP.innerHTML = +quadSlider.value/thesecondbe;
   }
 
   cubSlider.oninput = () => {
     drawFit();
-    cubOP.innerHTML = +cubSlider.value/100000;
+    cubOP.innerHTML = +cubSlider.value/theforthbe;
   }
 
   fit.addEventListener('click',drawFit,false);
@@ -232,15 +241,22 @@ d3.tsv("phase_bkg.tsv",(error,phase) => {
   function drawFit() {
     // console.log('fit');
     gridData.sort((a, b) => {return a.x>b.x});
-    gridDataPath.remove();
-    gridDataPath = gipContainer.append("g")
+    gridDataFit.remove();
+    gridDataFit = gipContainer.append("g")
                                    .attr("transform","translate("+(0)+","+(0)+")");
+
+    let fitabsisa = [];
+    for (var xi = 0; xi < 325;) {
+      fitabsisa.push({x:xi});
+      xi += 5;
+    }
     fx = +fxSlider.value;
     fy = +fySlider.value;
-    quad = +quadSlider.value / 1000;
-    cub = +cubSlider.value / 100000;
+    quad = +quadSlider.value / thesecondbe;
+    cub = +cubSlider.value / theforthbe;
     // console.log(fx,fy,quad,cub);
-    gridDataPath.append("path").attr("d",smoothFitGridData(gridData))
+    console.log(fitabsisa,gridData);
+    gridDataFit.append("path").attr("d",smoothFitGridData(fitabsisa))
                 .attr("stroke-width","2px")
                 .attr("fill","none")
                 .attr("stroke","red");
@@ -252,15 +268,23 @@ d3.tsv("phase_bkg.tsv",(error,phase) => {
 
   function computeLoss() {
     let cumsum = 0;
-    gridData.forEach((item, i) => {
-      // console.log(item.y,425-(quad*(item.x-fx-25)**2+cub*(item.x-fx-25)**4+fy));
-      console.log(cumsum);
-      cumsum += (item.y - 425+(quad*(item.x-fx-25)**2+cub*(item.x-fx-25)**4+fy))**2;
-      console.log(item.y,425-(quad*(item.x-fx-25)**2+cub*(item.x-fx-25)**4+fy),cumsum);
-    });
-    cumsum /= gridData.length;
-    lossCV.innerHTML = +cumsum;
-    // console.log(cumsum);
+
+    // console.log(gridData.length);
+    if (gridData.length===0) {
+      lossCV.innerHTML = "Pick some points on the Image!";
+    }
+    else {
+      gridData.forEach((item, i) => {
+        // console.log(item.y,425-(quad*(item.x-fx-25)**2+cub*(item.x-fx-25)**4+fy));
+        // console.log(cumsum);
+        cumsum += (item.y - 425+(quad*(item.x-fx-25)**2+cub*(item.x-fx-25)**4+fy))**2;
+        // console.log(item.y,425-(quad*(item.x-fx-25)**2+cub*(item.x-fx-25)**4+fy),cumsum);
+      });
+      cumsum /= gridData.length;
+      lossCV.innerHTML = +cumsum.toFixed(2);
+      // console.log(cumsum);
+    }
+
 
     let x = gridData.map((d) => {
       return d.x;
@@ -273,22 +297,35 @@ d3.tsv("phase_bkg.tsv",(error,phase) => {
     let yModel = x.map((i) => {
       return 425-(quad*(i-fx-25)**2+cub*(i-fx-25)**4+fy);
     });
-
-
-
-    console.log(y,yModel,cumsum);
+    // console.log(y,yModel,cumsum);
   }
 
 
 
   clear.addEventListener('click',function subtract() {
     console.log('fit');
+
+    fxSlider.value = 125;
+    fySlider.value = 0;
+    quadSlider.value= 0.001;
+    cubSlider.value=0;
+
+    fxOP.innerHTML = +fxSlider.value;
+    fxOP1.innerHTML = +fxSlider.value;
+    fxOP2.innerHTML = +fxSlider.value;
+    fyOP.innerHTML = +fySlider.value;
+    quadOP.innerHTML = +quadSlider.value/thesecondbe;
+    cubOP.innerHTML = +cubSlider.value/theforthbe;
+    gridDataFit.remove();
+    gridDataFit = gipContainer.append("g")
+                                   .attr("transform","translate("+(0)+","+(0)+")");
     imgfocus.remove();
+    imgfocus = gipContainer.append("g")
+       .style("display", "null");
+
     gridDataPath.remove();
     gridDataPath = gipContainer.append("g")
-                                   .attr("transform","translate("+(0)+","+(0)+")");
-   imgfocus = gipContainer.append("g")
-       .style("display", "null");
+                                  .attr("transform","translate("+(0)+","+(0)+")");
    gridData = [];
   },false);
 })

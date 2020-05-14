@@ -1,7 +1,7 @@
       var data1 = [],data2 = [],data3 = [];
       var margin = { top: 30, right: 30, bottom: 50, left: 50 };
-      var width = 550;
-      var height = 375;
+      var width = 450;
+      var height = 305;
       let dataPointLimit = 100;
       var duration = 3000;
       var max = 500;
@@ -27,7 +27,7 @@
       //
       var x = d3.scaleTime().domain([0, width]).range([0, width]);
       var globalX = x(dtHigh);
-      var y = d3.scaleLinear().domain([35, height-margin.bottom-margin.top]).range([height-margin.bottom-margin.top, 0]);
+      var y = d3.scaleLinear().domain([15, height-margin.bottom-margin.top]).range([height-margin.bottom-margin.top, 0]);
 
       var xAxis = d3.axisBottom().scale(x).tickFormat(liveDateFormatter);;
       var yAxis = d3.axisLeft().scale(y);
@@ -45,9 +45,9 @@
       let globalXtmp = globalX-dataPointLimit*step;
       for (var i = 0; i < dataPointLimit; i++) {
 
-            data1.push({x: globalXtmp,y: ((Math.random() * 10 + 250) >> 0)});
-            data2.push({x: globalXtmp,y: ((Math.random() * 100 + 50) >> 0)});
-            data3.push({x: globalXtmp,y: ((Math.random() * 30 + 100) >> 0)});
+            data1.push({x: globalXtmp,y: ((Math.random() * 10 + 170) >> 0)});
+            data2.push({x: globalXtmp,y: ((Math.random() * 45 + 45) >> 0)});
+            data3.push({x: globalXtmp,y: ((Math.random() * 30 + 65) >> 0)});
             globalXtmp += step;
       }
       // -----------------------------------
@@ -90,7 +90,7 @@
   		// 			    .attr('d', line);
       // Append the holder for line chart and fill area
       let plotGroup =chart.append('g')
-                          .attr('transform', 'translate('+(margin.left+18)+', '+(margin.top+5-25)+')');
+                          .attr('transform', 'translate('+(margin.left+18)+', '+(margin.top+25-25)+')');
       var path1 = plotGroup.append('path');
       var path2 = plotGroup.append('path');
       var path3 = plotGroup.append('path');
@@ -117,15 +117,15 @@
   	    // Generate new data
   	    var point1 = {
               		    x: globalX,
-              		    y: ((Math.random() * 100 + 50) >> 0)
+              		    y: ((Math.random() * 35 + 45) >> 0)
                     },
             point2 = {
                   		    x: globalX,
-                  		    y: ((Math.random() * 10 + 250) >> 0)
+                  		    y: ((Math.random() * 6 + 170) >> 0)
                   	     };
             point3 = {
                  		    x: globalX,
-                 		    y: ((Math.random() * 30 + 180) >> 0)
+                 		    y: ((Math.random() * 15 + 65) >> 0)
                  	     };
 
   	    data1.push(point1);
