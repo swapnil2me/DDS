@@ -1,0 +1,82 @@
+body{
+  background: #333;
+}
+
+h1 {
+  text-transform: uppercase;
+  color: #7a0177;
+}
+h2 {
+    font-size: 24px;
+    color: #000;
+    font-weight: 600;
+    margin-bottom: 5px;
+    text-align: center;
+    text-decoration: underline;
+}
+h3 {
+    font-size: 22px;
+    line-height: 1.375em;
+    color: #c51b8a;
+    font-weight: 500;
+    margin-bottom: 5px;
+    text-align: center;
+}
+h4 {
+    font-size: 19px;
+    line-height: 1.375em;
+    color: #000;
+    font-weight: 400;
+    margin-bottom: 5px;
+}
+p {
+    font-size: 17px;
+    line-height: 1.375em;
+    font-weight: 400;
+    margin-bottom: 5px;
+    text-align: justify;
+}
+
+.dristi{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  /* grid-template-columns: 1fr 1fr; */
+  /* margin: 25px; */
+  /* grid-gap: 1em; */
+}
+
+@media (min-width: 500px) {
+  .dristi { grid-template-columns: 1fr 1fr; }
+}
+
+/* @media (min-width: 900px) {
+  .cards { grid-template-columns: repeat(2, 1fr); }
+} */
+
+
+
+.title{
+  /* grid-column: 1/3; */
+  justify-content: space-around;
+  text-align: center;
+  font-family: Montserrat, sans-serif;
+}
+.topleft{
+  background-color: #888;
+  margin: 2px;
+}
+
+.topright{
+  background-color: #999;
+  margin: 2px;
+}
+
+.bottomleft{
+  background-color: #AAA;
+  margin: 2px;
+}
+
+.bottomright{
+  background-color: #BBB;
+  margin: 2px;
+}

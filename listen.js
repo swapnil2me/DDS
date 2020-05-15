@@ -1,5 +1,5 @@
 d3.tsv("phase_bkg.tsv",(error,phase) => {
-    let fit = document.querySelector("#fit");
+  let fit = document.querySelector("#fit");
   let clear = document.querySelector("#clear");
 
   let marginListen = {left:40, right:20, top:100, bottom:100};
