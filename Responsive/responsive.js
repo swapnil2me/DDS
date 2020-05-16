@@ -32,16 +32,55 @@ d3.tsv("swap.tsv", function (error,tsvData) {
     let domMarginLR = 8;
     let emMarginLR = 2;
 
-    WIDTHtr = (domWIDTH-2*domMarginLR-4*emMarginLR)/2;//document.getElementsByClassName("topright")[0].offsetWidth;
-    WIDTHtl = (domWIDTH-2*domMarginLR-4*emMarginLR)/2;//document.getElementsByClassName("topleft")[0].offsetWidth;
-    WIDTHbr = (domWIDTH-2*domMarginLR-4*emMarginLR)/2;//document.getElementsByClassName("bottomright")[0].offsetWidth;
-    WIDTHbl = (domWIDTH-2*domMarginLR-4*emMarginLR)/2;//document.getElementsByClassName("bottomleft")[0].offsetWidth;
+    console.log(domWIDTH>1080);
+
+    if (domWIDTH>1080) {
+      var activeWidth = 1080;
+      var WIDTHtr = (activeWidth-2*domMarginLR-4*emMarginLR)/2;//document.getElementsByClassName("topright")[0].offsetWidth;
+      var WIDTHtl = (activeWidth-2*domMarginLR-4*emMarginLR)/2;//document.getElementsByClassName("topleft")[0].offsetWidth;
+      var WIDTHbr = (activeWidth-2*domMarginLR-4*emMarginLR)/2;//document.getElementsByClassName("bottomright")[0].offsetWidth;
+      var WIDTHbl = (activeWidth-2*domMarginLR-4*emMarginLR)/2;//document.getElementsByClassName("bottomleft")[0].offsetWidth;
+
+      var HEIGHTtr = 0.65*WIDTHtr;
+      var HEIGHTtl = 0.65*WIDTHtl;
+      var HEIGHTbr = 0.65*WIDTHbr;
+      var HEIGHTbl = 0.65*WIDTHbl;
+
+    } else if (domWIDTH<=600) {
+      var activeWidth = domWIDTH;
+      var WIDTHtr = (activeWidth-2*domMarginLR-4*emMarginLR);//document.getElementsByClassName("topright")[0].offsetWidth;
+      var WIDTHtl = (activeWidth-2*domMarginLR-4*emMarginLR);//document.getElementsByClassName("topleft")[0].offsetWidth;
+      var WIDTHbr = (activeWidth-2*domMarginLR-4*emMarginLR);//document.getElementsByClassName("bottomright")[0].offsetWidth;
+      var WIDTHbl = (activeWidth-2*domMarginLR-4*emMarginLR);//document.getElementsByClassName("bottomleft")[0].offsetWidth;
+
+      var HEIGHTtr = 0.65*WIDTHtr;
+      var HEIGHTtl = 0.65*WIDTHtl;
+      var HEIGHTbr = 0.65*WIDTHbr;
+      var HEIGHTbl = 0.65*WIDTHbl;
+
+    } else {
+      var activeWidth = domWIDTH;
+      var WIDTHtr = (activeWidth-2*domMarginLR-4*emMarginLR)/2;//document.getElementsByClassName("topright")[0].offsetWidth;
+      var WIDTHtl = (activeWidth-2*domMarginLR-4*emMarginLR)/2;//document.getElementsByClassName("topleft")[0].offsetWidth;
+      var WIDTHbr = (activeWidth-2*domMarginLR-4*emMarginLR)/2;//document.getElementsByClassName("bottomright")[0].offsetWidth;
+      var WIDTHbl = (activeWidth-2*domMarginLR-4*emMarginLR)/2;//document.getElementsByClassName("bottomleft")[0].offsetWidth;
+
+      var HEIGHTtr = 0.65*WIDTHtr;
+      var HEIGHTtl = 0.65*WIDTHtl;
+      var HEIGHTbr = 0.65*WIDTHbr;
+      var HEIGHTbl = 0.65*WIDTHbl;
+
+    }
+
+
+
+    console.log(activeWidth);
+
+
+
     // console.log(WIDTHtr);
 
-    HEIGHTtr = 0.65*WIDTHtr;
-    HEIGHTtl = 0.65*WIDTHtl;
-    HEIGHTbr = 0.65*WIDTHbr;
-    HEIGHTbl = 0.65*WIDTHbl;
+
 
 
     MARGINtr = {left:0.05*WIDTHtr,
@@ -128,11 +167,11 @@ d3.tsv("swap.tsv", function (error,tsvData) {
     let line_stocks_smooth = d3.line().curve(d3.curveCardinal)
                                .x(function(d){return x_stocks_scale(d.date);})
                                .y(function(d){return y_stocks_scale(d.shareValue);});
-    // let areaLine_stocks = d3.area()
-    //                         .x(function(d){ return x_stocks_axis(d.date); })
-    //                         .y0(y_stocks_axis(0))
-    //                         .y1(function(d){ return y_stocks_axis(d.shareValue); })
-    //                         .curve(d3.curveCardinal);
+    let areaLine_stocks = d3.area()
+                            .x(function(d){ return x_stocks_scale(d.date); })
+                            .y0(y_stocks_scale(0))
+                            .y1(function(d){ return y_stocks_scale(d.shareValue); })
+                            .curve(d3.curveCardinal);
 
     selectStateAndPlot("MH")
     function selectStateAndPlot(stateTag) {
@@ -167,19 +206,233 @@ d3.tsv("swap.tsv", function (error,tsvData) {
           .call(x_stocks_axis.ticks(4))
           .attr("font-size",axisFontSize+"px")
 
-      stockHistory.append("g").append("text")
-          .attr("x", (WIDTHbl/2))
-          .attr("y", (HEIGHTbl/2-MARGINbl.bottom-2))
-          .style("text-anchor", "end")
-          .attr("font-size",axisFontSize+"px")
-          .text("Month");
-
-
       stockHistory.append("g")
           .attr("class", "axisStock")
           .attr("transform", "translate("+(-WIDTHbl/2+MARGINbl.left)+"," + (-HEIGHTbl/2+MARGINbl.top) + ")")
           .call(y_stocks_axis.ticks(4))
           .attr("font-size",axisFontSize+"px")
+
+      let linePath = stockHistory.append("g").attr("transform", "translate("+(-WIDTHbl/2+MARGINbl.left)+"," + (-HEIGHTbl/2+MARGINbl.top) + ")");
+
+      let areaOpacity = 0.55;
+      let lcolor = ["#8856a7","#2ca25f","#f03b20"]
+         ,acolor = ["#9ebcda","#f7fcb9","#feb24c"];
+     let fusColr = ["#fde0dd","#f7fcb9","#fee8c8"];
+
+     [dataC2,dataC1,dataC0].map((e,i) => {
+       linePath.append("path").datum(e).attr("class", "areaC"+i).attr("fill",fusColr[i]).attr("opacity",areaOpacity).attr("stroke",acolor[i]).attr("d", areaLine_stocks);
+     });// To Move all ahadow areas below lines
+
+      [dataC2,dataC1,dataC0].map((e,i) => {
+        linePath.append("path").datum(e).attr("class", "lineC"+i).attr("fill","none").attr("stroke",lcolor[i]).attr("stroke-width",2)
+          .attr("d", line_stocks_smooth)
+          .on('mouseover',mousemoveLine)
+          // .on('mouseout',mouseoutLine)
+          ;
+      });
+
+    let widthStocks = WIDTHbl - MARGINbl.left - MARGINbl.right,
+        heightStocks = HEIGHTbl - MARGINbl.top - MARGINbl.bottom;
+    let xBaxWidth = widthStocks/6;
+    let yBaxWidth = heightStocks/10;
+    let xGrid = stockHistory.append("g").attr("class", "Grid").style("display", "null");
+    xGrid.append("rect")
+        .attr("class", "xGrid")
+        .attr("width", xBaxWidth*0.025)
+        .attr("height", heightStocks)
+        .attr("fill","#AAA")
+        .attr("x", 0.0)
+        .attr("y", -HEIGHTbl/2+MARGINbl.top);
+
+    let yGrid = stockHistory.append("g").attr("class", "Grid").style("display", "null");
+    yGrid.append("rect")
+        .attr("class", "xGrid")
+        .attr("width", widthStocks)
+        .attr("height", yBaxWidth*0.025)
+        .attr("fill","#AAA")
+        .attr("x", -WIDTHbl/2+MARGINbl.left)
+        .attr("y", 0.0);
+
+      let focus = stockHistory.append("g")
+          .attr("fill","#EEE")
+          .style("display", "null");
+
+      focus.append("circle")
+          .attr("class","tootip")
+          .attr("stroke-width",2)
+          .attr("r", 5);
+
+
+
+
+      let tooltipBox = stockHistory.append("g").attr("class","tooltipBox");
+
+
+      let tootipW = WIDTHbl*0.15;
+      let tootipH = HEIGHTbl*0.12;
+      tooltipBox.append("rect").attr("class","toorect")
+                              .attr("rx",5)
+                              .attr("ry",5).attr("stroke-width",2)
+                              .attr("fill","#EEE")
+                              .attr("stroke","#AAA")
+                              .attr("width", tootipW)
+                              .attr("height", tootipH);
+
+
+      tooltipBox.append("text").attr("class","tooltextX")
+      .attr("font-size",axisFontSize+"px")
+      .attr("dominant-baseline","middle")
+      .style("text-anchor", "middle")
+      .attr("x",tootipW/2)
+      .attr("y",tootipH/3)
+      .text("-");
+
+      tooltipBox.append("text").attr("class","tooltextY")
+      .attr("font-size",axisFontSize+"px")
+      .attr("dominant-baseline","middle")
+      .style("text-anchor", "middle")
+      .attr("x",tootipW/2)
+      .attr("y",tootipH/1.25)
+      .text("-");
+          // .append("rect");
+
+
+      tooltipBox.attr("transform","translate("+(WIDTHbl/4)+","+(-HEIGHTbl/2+MARGINbl.top)+")")
+      // let tooltext = stockHistory.append("g").attr("class", "baxText").append("text")
+      //           .attr("x", (WIDTHtr/2-MARGINbl.left+5-WIDTHtr*0.2))
+      //           .attr("y", -HEIGHTtr/2+MARGINbl.top).text("swapnil");
+      //
+      // console.log(tooltext);
+
+
+      var xBox = stockHistory.append("g").attr("class", "xBox").style("display", "null");
+      var yBox = stockHistory.append("g").attr("class", "yBox").style("display", "null");
+
+
+      xBox.append("rect")
+          .attr("class", "bax")
+          .attr("width", xBaxWidth)
+          .attr("height", yBaxWidth)
+          .attr("x", (-xBaxWidth/2))
+          .attr("y", (HEIGHTbl/2-MARGINbl.bottom+3))
+          .attr("rx", 4)
+          .attr("ry", 4)
+          .attr("fill","#EEE")
+          .attr("stroke","#AAA");
+
+      yBox.append("rect")
+          .attr("class", "bax")
+          .attr("width", yBaxWidth*1.8)
+          .attr("height", xBaxWidth/2.85)
+          .attr("x", (-WIDTHbl/2+MARGINbl.left-yBaxWidth*1.8-2))
+          .attr("y", (-xBaxWidth/2/2.85))
+          .attr("rx", 4)
+          .attr("ry", 4)
+          .attr("fill","#EEE")
+          .attr("stroke","#AAA");
+
+      yBox.append("text")
+          .attr("font-size",axisFontSize+"px")
+          .attr("dominant-baseline","middle")
+          .attr("class", "baxText")
+          .attr("x", (-WIDTHbl/2+MARGINbl.left-yBaxWidth*1.5))
+          .attr("y", (-xBaxWidth/50/2.85));
+
+      xBox.append("text")
+          .attr("font-size",axisFontSize+"px")
+          .attr("dominant-baseline","middle")
+          .attr("class", "baxText")
+          .attr("x", -0.30*xBaxWidth)
+          .attr("y", (HEIGHTbl/2-MARGINbl.bottom+yBaxWidth/1.5));
+
+      xBox.attr("transform", "translate(" + 0 + "," + 0 + ")");
+      yBox.attr("transform", "translate(" + 0 + "," + 0 + ")");
+
+
+
+      function mousemoveLine() {
+        // console.log(dateFormatter(x_stocks_scale.invert(d3.mouse(this)[0])));
+        let cindex = +this.attributes.class.nodeValue.split("C")[1];
+        // console.log(this.attributes["stroke-width"].nodeValue);
+        xCord = d3.mouse(this)[0];
+        yCord = d3.mouse(this)[1];
+        this.attributes["stroke-width"].nodeValue = axisFontSize/5;
+
+        [0,1,2].map((e,i) => {
+          if (i !== cindex) {
+              // console.log(e);
+              // console.log(linePath.select("path.lineC"+e)._groups[0][0]);
+              linePath.select("path.lineC"+e)._groups[0][0].attributes["stroke-width"].nodeValue= axisFontSize/7;
+          }
+        })
+
+        let data = [dataC2,dataC1,dataC0][cindex];
+        let x0 = x_stocks_scale.invert(d3.mouse(this)[0]),
+            i = bisectDate(data, x0, 1),
+            d0 = data[i - 1],
+            d1 = data[i - 1],
+            d = x0 - d0.date > d1.date - x0 ? d1 : d0,
+            dt = (d.date),
+            sv = (d.shareValue);
+
+
+        tooltipBox.select(".tooltextX")
+                  .attr("fill",lcolor[cindex])
+                  .text(dateFormatter(dt));
+
+        tooltipBox.select(".tooltextY")
+                  .attr("fill",lcolor[cindex])
+                  .text(sv);
+        focus.transition().duration(250).attr("transform", "translate(" + (xCord-WIDTHbl/2+MARGINbl.left) + "," + (yCord-HEIGHTbl/2+MARGINbl.top) + ")");
+        focus.attr("stroke",lcolor[cindex]).attr("fill",acolor[cindex]);
+        tooltipBox.select(".toorect").attr("stroke",lcolor[cindex]).attr("fill",fusColr[cindex]);
+
+        xGrid.transition().duration(250).select(".xGrid")
+              .attr("height", heightStocks-yCord)
+              .attr("transform","translate(" + (xCord-WIDTHbl/2+MARGINbl.left) + "," + yCord + ")");
+        yGrid.transition().duration(250).select(".xGrid")
+              .attr("transform","translate(" + 0 + "," + (yCord-HEIGHTbl/2+MARGINbl.top) + ")");
+
+
+        xBoxPos = (xCord>WIDTHbl-1.25*xBaxWidth)?(WIDTHbl/2-0.5*xBaxWidth):(xCord-WIDTHbl/2+MARGINbl.left);
+        console.log(xCord,WIDTHbl-1.25*xBaxWidth);
+
+        xBox.transition().duration(250).attr("transform", "translate(" + (xBoxPos) + "," + 0 + ")");
+        yBox.transition().duration(250).attr("transform", "translate(" + 0 + "," + (yCord-HEIGHTbl/2+MARGINbl.top) + ")");
+
+        xBox.select(".baxText").attr("stroke",lcolor[cindex]).attr("fill",lcolor[cindex]).text(dateFormatter(dt));
+        yBox.select(".baxText").attr("stroke",lcolor[cindex]).attr("fill",lcolor[cindex]).text(sv);
+
+        xBox.select(".bax").attr("stroke",lcolor[cindex]).attr("fill",fusColr[cindex]);
+        yBox.select(".bax").attr("stroke",lcolor[cindex]).attr("fill",fusColr[cindex]);
+
+      }
+
+      // function mouseoutLine() {
+      //   // this.attributes["stroke-width"].nodeValue = 2;
+      //   console.log(this.attributes.stroke.nodeValue===focus._groups[0][0].attributes.stroke.nodeValue);
+      //   this.attributes["stroke-width"].nodeValue = (this.attributes.stroke.nodeValue===focus._groups[0][0].attributes.stroke.nodeValue) ? 3:1;
+      //
+      // }
+
+
+
+
+
+      stockHistory.append("g").append("text")
+          .attr("x", (axisFontSize*1.5))
+          .attr("y", (-HEIGHTbl/2+MARGINbl.top))
+          .attr("dominant-baseline","middle")
+          .style("text-anchor", "middle")
+          .attr("font-size",(axisFontSize*1.5)+"px")
+          .text("Historic Data");
+
+      stockHistory.append("g").append("text")
+          .attr("x", (WIDTHbl/2-MARGINbl.right))
+          .attr("y", (HEIGHTbl/2-MARGINbl.bottom-2))
+          .style("text-anchor", "end")
+          .attr("font-size",axisFontSize+"px")
+          .text("Month");
 
       stockHistory.append("g").append("text")
           .attr("transform","rotate(-90)")
@@ -189,28 +442,6 @@ d3.tsv("swap.tsv", function (error,tsvData) {
           .attr("font-size",axisFontSize+"px")
           .text("Price in INR");
 
-      let linePath = stockHistory.append("g").attr("transform", "translate("+(-WIDTHbl/2+MARGINbl.left)+"," + (-HEIGHTbl/2+MARGINbl.top) + ")")
-                                 .append("path");
-
-      linePath.datum(dataC0).transition().duration(10)
-          .attr("class", "lineC0")
-          .attr("fill","none")
-          .attr("stroke",'red')
-          .attr("d", line_stocks_smooth);
-
-
-console.log(axisFontSize);
-
-
-
-
-      stockHistory.append("g").append("rect")
-           .attr("width", WIDTHtr*0.2)
-           .attr("height", HEIGHTtr*0.2)
-           .attr("x", -WIDTHtr*0.2/2)
-           .attr("y", -HEIGHTtr*0.2/2)
-           .attr("fill","none")
-           .attr("stroke","red")
 
 
 

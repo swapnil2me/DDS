@@ -45,38 +45,62 @@ p {
   /* grid-gap: 1em; */
 }
 
-@media (min-width: 500px) {
-  .dristi { grid-template-columns: 1fr 1fr; }
-}
-
-/* @media (min-width: 900px) {
-  .cards { grid-template-columns: repeat(2, 1fr); }
-} */
-
-
-
 .title{
   /* grid-column: 1/3; */
-  justify-content: space-around;
+  /* justify-content: space-around; */
   text-align: center;
   font-family: Montserrat, sans-serif;
 }
+
+@media (min-width: 600px) {
+  .dristi { grid-template-columns: 1fr 1fr; }
+  .title {grid-column: 1/3;}
+}
+
+@media (min-width: 1080px) {
+  .dristi { margin: 100px; }
+}
+
+
+
 .topleft{
   background-color: #888;
   margin: 2px;
+  opacity: 0.8;
+  /* display: flex;
+  align-items: center;
+  justify-content: center; */
+}
+.topleft:hover{
+  opacity: 1;
 }
 
 .topright{
   background-color: #999;
   margin: 2px;
+  opacity: 0.8;
+  /* display: flex;
+  align-items: center;
+  justify-content: center; */
+}
+.topright:hover{
+  opacity: 1;
 }
 
 .bottomleft{
-  background-color: #AAA;
+  background-color: #FFF;
   margin: 2px;
+  opacity: 1;
+  /* display: flex;
+  align-items: center;
+  justify-content: center; */
 }
 
 .bottomright{
   background-color: #BBB;
   margin: 2px;
+  opacity: 1;
+  /* display: flex;
+  align-items: center;
+  justify-content: center; */
 }
