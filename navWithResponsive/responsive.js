@@ -230,6 +230,8 @@ d3.tsv("swap.tsv", function (error,tsvData) {
         linePath.append("path").datum(e).attr("class", "lineC"+i).attr("fill","none").attr("stroke",lcolor[i]).attr("stroke-width",lineWidth)
           .attr("d", line_stocks_smooth)
           .on('mouseover',mousemoveLine)
+          .on("touchstart", touchLine)
+          .on("touchmove", touchLine)
           // .on('mouseout',mouseoutLine)
           ;
       });
@@ -265,41 +267,6 @@ d3.tsv("swap.tsv", function (error,tsvData) {
           .attr("stroke-width",2)
           .attr("r", 5);
 
-      // let tooltipBox = stockHistory.append("g").attr("class","tooltipBox");
-      //
-      // let tootipW = WIDTHbl*0.15;
-      // let tootipH = HEIGHTbl*0.12;
-      // tooltipBox.append("rect").attr("class","toorect")
-      //                         .attr("rx",5)
-      //                         .attr("ry",5).attr("stroke-width",2)
-      //                         .attr("fill","#EEE")
-      //                         .attr("stroke","#AAA")
-      //                         .attr("width", tootipW)
-      //                         .attr("height", tootipH);
-      //
-      // tooltipBox.append("text").attr("class","tooltextX")
-      // .attr("font-size",axisFontSize+"px")
-      // .attr("dominant-baseline","middle")
-      // .style("text-anchor", "middle")
-      // .attr("x",tootipW/2)
-      // .attr("y",tootipH/3)
-      // .text("-");
-      //
-      // tooltipBox.append("text").attr("class","tooltextY")
-      // .attr("font-size",axisFontSize+"px")
-      // .attr("dominant-baseline","middle")
-      // .style("text-anchor", "middle")
-      // .attr("x",tootipW/2)
-      // .attr("y",tootipH/1.25)
-      // .text("-");
-      //     // .append("rect");
-      //
-      // tooltipBox.attr("transform","translate("+(WIDTHbl/4)+","+(-HEIGHTbl/2+MARGINbl.top)+")");
-      // let tooltext = stockHistory.append("g").attr("class", "baxText").append("text")
-      //           .attr("x", (WIDTHtr/2-MARGINbl.left+5-WIDTHtr*0.2))
-      //           .attr("y", -HEIGHTtr/2+MARGINbl.top).text("swapnil");
-      //
-      // console.log(tooltext);
 
       var xBox = stockHistory.append("g").attr("class", "xBox").style("display", "null");
       var yBox = stockHistory.append("g").attr("class", "yBox").style("display", "null");
@@ -345,6 +312,46 @@ d3.tsv("swap.tsv", function (error,tsvData) {
       xBox.attr("transform", "translate(" + 0 + "," + 0 + ")");
       yBox.attr("transform", "translate(" + 0 + "," + 0 + ")");
 
+      function touchLine() {
+
+        let cindex = +this.attributes.class.nodeValue.split("C")[1];
+        // console.log(this.attributes["stroke-width"].nodeValue);
+        xCord = d3.touches(this)[0][0];
+        yCord = d3.touches(this)[0][1];
+        this.attributes["stroke-width"].nodeValue = axisFontSize/5;
+        // console.log(d3.touches(this),xCord,yCord);
+        changeProductLine(cindex);
+
+        let data = [dataC2,dataC1,dataC0][cindex];
+        let x0 = x_stocks_scale.invert(d3.mouse(this)[0]),
+            i = bisectDate(data, x0, 1),
+            d0 = data[i - 1],
+            d1 = data[i - 1],
+            d = x0 - d0.date > d1.date - x0 ? d1 : d0,
+            dt = (d.date),
+            sv = (d.shareValue);
+        focus.transition().duration(250).attr("transform", "translate(" + (xCord-WIDTHbl/2+MARGINbl.left) + "," + (yCord-HEIGHTbl/2+MARGINbl.top) + ")");
+        focus.attr("stroke",lcolor[cindex]).attr("fill",acolor[cindex]);
+
+        xGrid.transition().duration(250).select(".xGrid")
+              .attr("height", heightStocks-yCord)
+              .attr("transform","translate(" + (xCord-WIDTHbl/2+MARGINbl.left) + "," + yCord + ")");
+        yGrid.transition().duration(250).select(".xGrid")
+              .attr("transform","translate(" + 0 + "," + (yCord-HEIGHTbl/2+MARGINbl.top) + ")");
+
+
+        xBoxPos = (xCord>WIDTHbl-1.25*xBaxWidth)?(WIDTHbl/2-0.5*xBaxWidth):(xCord-WIDTHbl/2+MARGINbl.left);
+
+        xBox.transition().duration(250).attr("transform", "translate(" + (xBoxPos) + "," + 0 + ")");
+        yBox.transition().duration(250).attr("transform", "translate(" + 0 + "," + (yCord-HEIGHTbl/2+MARGINbl.top) + ")");
+
+        xBox.select(".baxText").attr("stroke",lcolor[cindex]).attr("fill",lcolor[cindex]).text(dateFormatter(dt));
+        yBox.select(".baxText").attr("stroke",lcolor[cindex]).attr("fill",lcolor[cindex]).text(sv);
+
+        xBox.select(".bax").attr("stroke",lcolor[cindex]).attr("fill",fusColr[cindex]);
+        yBox.select(".bax").attr("stroke",lcolor[cindex]).attr("fill",fusColr[cindex]);
+      }
+
       function mousemoveLine() {
         // console.log(dateFormatter(x_stocks_scale.invert(d3.mouse(this)[0])));
         let cindex = +this.attributes.class.nodeValue.split("C")[1];
@@ -352,7 +359,7 @@ d3.tsv("swap.tsv", function (error,tsvData) {
         xCord = d3.mouse(this)[0];
         yCord = d3.mouse(this)[1];
         this.attributes["stroke-width"].nodeValue = axisFontSize/5;
-
+        // console.log(xCord,yCord);
         changeProductLine(cindex);
 
         let data = [dataC2,dataC1,dataC0][cindex];
@@ -365,16 +372,8 @@ d3.tsv("swap.tsv", function (error,tsvData) {
             sv = (d.shareValue);
 
 
-        // tooltipBox.select(".tooltextX")
-        //           .attr("fill",lcolor[cindex])
-        //           .text(dateFormatter(dt));
-        //
-        // tooltipBox.select(".tooltextY")
-        //           .attr("fill",lcolor[cindex])
-        //           .text(sv);
         focus.transition().duration(250).attr("transform", "translate(" + (xCord-WIDTHbl/2+MARGINbl.left) + "," + (yCord-HEIGHTbl/2+MARGINbl.top) + ")");
         focus.attr("stroke",lcolor[cindex]).attr("fill",acolor[cindex]);
-        // tooltipBox.select(".toorect").attr("stroke",lcolor[cindex]).attr("fill",fusColr[cindex]);
 
         xGrid.transition().duration(250).select(".xGrid")
               .attr("height", heightStocks-yCord)
@@ -384,7 +383,6 @@ d3.tsv("swap.tsv", function (error,tsvData) {
 
 
         xBoxPos = (xCord>WIDTHbl-1.25*xBaxWidth)?(WIDTHbl/2-0.5*xBaxWidth):(xCord-WIDTHbl/2+MARGINbl.left);
-        // console.log(xCord,WIDTHbl-1.25*xBaxWidth);
 
         xBox.transition().duration(250).attr("transform", "translate(" + (xBoxPos) + "," + 0 + ")");
         yBox.transition().duration(250).attr("transform", "translate(" + 0 + "," + (yCord-HEIGHTbl/2+MARGINbl.top) + ")");
@@ -856,13 +854,13 @@ function respondListen() {
 
   } else if (domWIDTH<=600 & domWIDTH>400) {
     var activeWidth = domWIDTH/1.75;
-    console.log(activeWidth);
+    // console.log(activeWidth);
   } else if (domWIDTH<=400) {
     var activeWidth = domWIDTH/1.25;
-    console.log(activeWidth,"400");
+    // console.log(activeWidth,"400");
   } else {
     var activeWidth = domWIDTH/1.75;
-    console.log(activeWidth);
+    // console.log(activeWidth);
   }
 
 
@@ -985,19 +983,19 @@ function respondListen() {
                               .attr("transform","translate("+(imageWidth/2-sliderHeight)+","+(10*eqnBoxMargin)+")");
 
 gipSliders.append("rect").attr("class", "gipSliders").attr("width", 2).attr("height", sliderHeight).attr("fill","#fff").attr("x", 0).attr("y", 0);
-gipSliders.append("circle").attr("class", "xShift").attr("cx",1).attr("cy",0).attr("r",sliderBallRadius).call(d3.drag().on("drag",xShift));
+gipSliders.append("circle").attr("class", "xShift").attr("cx",1).attr("cy",0).attr("r",sliderBallRadius).call(d3.drag().on("drag",xShift)).call(d3.drag().on("start",xShift)).call(d3.drag().on("end",xShift));
 gipSliders.append("text").attr("x", 0).attr("y", sliderHeight+15).attr("font-size",eqnBoxWidth/35+"px").attr("fill","#fff").attr("dominant-baseline","middle").style("text-anchor", "middle").text("X-shift");
 
 gipSliders.append("rect").attr("class", "gipSliders").attr("width", 2).attr("height", sliderHeight).attr("fill","#fff").attr("x", eqnBoxWidth/8).attr("y", 0);
-gipSliders.append("circle").attr("class", "yShift").attr("cx",eqnBoxWidth/8+1).attr("cy",0).attr("r",sliderBallRadius).call(d3.drag().on("drag",yShift));
+gipSliders.append("circle").attr("class", "yShift").attr("cx",eqnBoxWidth/8+1).attr("cy",0).attr("r",sliderBallRadius).call(d3.drag().on("drag",yShift)).call(d3.drag().on("start",yShift)).call(d3.drag().on("end",yShift));
 gipSliders.append("text").attr("x", eqnBoxWidth/8).attr("y", sliderHeight+15).attr("font-size",eqnBoxWidth/35+"px").attr("fill","#fff").attr("dominant-baseline","middle").style("text-anchor", "middle").text("Y-shift");
 
 gipSliders.append("rect").attr("class", "gipSliders").attr("width", 2).attr("height", sliderHeight).attr("fill","#fff").attr("x", 2*eqnBoxWidth/8).attr("y", 0);
-gipSliders.append("circle").attr("class", "quad").attr("cx",2*eqnBoxWidth/8+1).attr("cy",0).attr("r",sliderBallRadius).call(d3.drag().on("drag",quadShift));
+gipSliders.append("circle").attr("class", "quad").attr("cx",2*eqnBoxWidth/8+1).attr("cy",0).attr("r",sliderBallRadius).call(d3.drag().on("drag",quadShift)).call(d3.drag().on("start",quadShift)).call(d3.drag().on("end",quadShift));
 gipSliders.append("text").attr("x", 2*eqnBoxWidth/8).attr("y", sliderHeight+15).attr("font-size",eqnBoxWidth/35+"px").attr("fill","#fff").attr("dominant-baseline","middle").style("text-anchor", "middle").text("__²");
 
 gipSliders.append("rect").attr("class", "gipSliders").attr("width", 2).attr("height", sliderHeight).attr("fill","#fff").attr("x", 3*eqnBoxWidth/8).attr("y", 0);
-gipSliders.append("circle").attr("class", "forth").attr("cx",3*eqnBoxWidth/8+1).attr("cy",0).attr("r",sliderBallRadius).call(d3.drag().on("drag",forthShift));
+gipSliders.append("circle").attr("class", "forth").attr("cx",3*eqnBoxWidth/8+1).attr("cy",0).attr("r",sliderBallRadius).call(d3.drag().on("drag",forthShift)).call(d3.drag().on("start",forthShift)).call(d3.drag().on("end",forthShift));
 gipSliders.append("text").attr("x", 3*eqnBoxWidth/8).attr("y", sliderHeight+15).attr("font-size",eqnBoxWidth/35+"px").attr("fill","#fff").attr("dominant-baseline","middle").style("text-anchor", "middle").text("__⁴");
 
 
@@ -1007,13 +1005,6 @@ d3.select(".quad").attr("transform","translate("+(0)+","+(2*sliderHeight/3)+")")
 d3.select(".forth").attr("transform","translate("+(0)+","+(1*sliderHeight/2)+")");
 
 
-function dragged() {
-  // console.log(this);
-  // console.log(d3.event.x,d3.event.y);
-  if (d3.event.y>0 & d3.event.y<sliderHeight) {
-    d3.select(this).attr("transform","translate("+(0)+","+(d3.event.y)+")");
-  }
-}
 
 let theforthbe = 100000000;
 let thesecondbe = 10000;
@@ -1093,11 +1084,10 @@ function forthShift() {
       .attr("y", eqnBoxMargin);
 
   eqNloss.append("text").attr("class","eqnText")
-      .attr("font-size",eqnBoxWidth/35+"px")
+      .attr("font-size",eqnBoxWidth/30+"px")
       .attr("dominant-baseline","middle")
       .style("text-anchor", "middle")
       .attr("fill","#fff")
-      .attr("stroke","#fff")
       .attr("x", eqnBoxMargin+eqnBoxWidth/2)
       .attr("y", eqnBoxMargin+eqnBoxWidth/5/4);
 
@@ -1106,7 +1096,6 @@ eqNloss.append("text").attr("class","lossText")
     .attr("dominant-baseline","middle")
     .style("text-anchor", "middle")
     .attr("fill","#fff")
-    .attr("stroke","#fff")
     .attr("x", eqnBoxMargin+eqnBoxWidth/2)
     .attr("y", eqnBoxMargin+eqnBoxWidth/5/1.7);
 
@@ -1115,7 +1104,6 @@ eqNloss.append("text").attr("class","hint")
     .attr("dominant-baseline","middle")
     .style("text-anchor", "middle")
     .attr("fill","#fff")
-    .attr("stroke","#fff")
     .attr("x", eqnBoxMargin+eqnBoxWidth/2)
     .attr("y", eqnBoxMargin+eqnBoxWidth/5.5);
 
