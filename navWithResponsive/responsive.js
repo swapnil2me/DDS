@@ -951,6 +951,7 @@ function respondListen() {
         .on("click",removeImgFocus);
 
   gridData.push({x:(d3.mouse(this)[0]-5),y:(d3.mouse(this)[1]-5)});
+  gridData.sort((a, b) => {return a.x>b.x});
   computeLoss();
   connectTheDots();
   }//ON IMAGE CLICK
@@ -978,23 +979,23 @@ function respondListen() {
   let sliderHeight = imageWidth/5;
   let sliderBallRadius = sliderHeight/7;
   let gipSliders = gipContainer.append("g")
-                              .attr("transform","translate("+(imageWidth/2-sliderHeight)+","+(10*eqnBoxMargin)+")");
+                              .attr("transform","translate("+(imageWidth/2-sliderHeight)+","+(imageHeight-sliderHeight-3*MARGINbr.bottom)+")");
 
 gipSliders.append("rect").attr("class", "gipSliders").attr("width", 2).attr("height", sliderHeight).attr("fill","#fff").attr("x", 0).attr("y", 0);
 gipSliders.append("circle").attr("class", "xShift").attr("cx",1).attr("cy",0).attr("r",sliderBallRadius).call(d3.drag().on("start",xShift).on("drag",xShift).on("end",xShift));
-gipSliders.append("text").attr("x", 0).attr("y", sliderHeight+15).attr("font-size",eqnBoxWidth/35+"px").attr("fill","#fff").attr("dominant-baseline","middle").style("text-anchor", "middle").text("X-shift");
+gipSliders.append("text").attr("x", 0).attr("y", sliderHeight+30).attr("font-size",eqnBoxWidth/35+"px").attr("fill","#fff").attr("dominant-baseline","middle").style("text-anchor", "middle").text("X-shift");
 
 gipSliders.append("rect").attr("class", "gipSliders").attr("width", 2).attr("height", sliderHeight).attr("fill","#fff").attr("x", eqnBoxWidth/8).attr("y", 0);
 gipSliders.append("circle").attr("class", "yShift").attr("cx",eqnBoxWidth/8+1).attr("cy",0).attr("r",sliderBallRadius).call(d3.drag().on("start",yShift).on("drag",yShift).on("end",yShift));
-gipSliders.append("text").attr("x", eqnBoxWidth/8).attr("y", sliderHeight+15).attr("font-size",eqnBoxWidth/35+"px").attr("fill","#fff").attr("dominant-baseline","middle").style("text-anchor", "middle").text("Y-shift");
+gipSliders.append("text").attr("x", eqnBoxWidth/8).attr("y", sliderHeight+30).attr("font-size",eqnBoxWidth/35+"px").attr("fill","#fff").attr("dominant-baseline","middle").style("text-anchor", "middle").text("Y-shift");
 
 gipSliders.append("rect").attr("class", "gipSliders").attr("width", 2).attr("height", sliderHeight).attr("fill","#fff").attr("x", 2*eqnBoxWidth/8).attr("y", 0);
 gipSliders.append("circle").attr("class", "quad").attr("cx",2*eqnBoxWidth/8+1).attr("cy",0).attr("r",sliderBallRadius).call(d3.drag().on("start",quadShift).on("drag",quadShift).on("end",quadShift));
-gipSliders.append("text").attr("x", 2*eqnBoxWidth/8).attr("y", sliderHeight+15).attr("font-size",eqnBoxWidth/35+"px").attr("fill","#fff").attr("dominant-baseline","middle").style("text-anchor", "middle").text("__²");
+gipSliders.append("text").attr("x", 2*eqnBoxWidth/8).attr("y", sliderHeight+30).attr("font-size",eqnBoxWidth/35+"px").attr("fill","#fff").attr("dominant-baseline","middle").style("text-anchor", "middle").text("__²");
 
 gipSliders.append("rect").attr("class", "gipSliders").attr("width", 2).attr("height", sliderHeight).attr("fill","#fff").attr("x", 3*eqnBoxWidth/8).attr("y", 0);
 gipSliders.append("circle").attr("class", "forth").attr("cx",3*eqnBoxWidth/8+1).attr("cy",0).attr("r",sliderBallRadius).call(d3.drag().on("start",forthShift).on("drag",forthShift).on("end",forthShift));
-gipSliders.append("text").attr("x", 3*eqnBoxWidth/8).attr("y", sliderHeight+15).attr("font-size",eqnBoxWidth/35+"px").attr("fill","#fff").attr("dominant-baseline","middle").style("text-anchor", "middle").text("__⁴");
+gipSliders.append("text").attr("x", 3*eqnBoxWidth/8).attr("y", sliderHeight+30).attr("font-size",eqnBoxWidth/35+"px").attr("fill","#fff").attr("dominant-baseline","middle").style("text-anchor", "middle").text("__⁴");
 
 
 d3.select(".xShift").attr("transform","translate("+(0)+","+(1*sliderHeight/2)+")");
@@ -1112,7 +1113,8 @@ eqNloss.append("text").attr("class","hint")
     gridDataPath.remove();
     gridDataPath = gipContainer.append("g")
                                    .attr("transform","translate("+(0)+","+(0)+")");
-    gridData.sort((a, b) => {return a.x>b.x});
+    gridData.sort((a, b) => {return a.x-b.x});
+
     gridDataPath.append("path").attr("d",smoothLineGridData(gridData))
                 .attr("stroke-width","1px")
                 .attr("fill","none")
