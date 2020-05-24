@@ -78,8 +78,6 @@ d3.tsv("swap.tsv", function (error,tsvData) {
 
       var axisFontSize = (0.035*WIDTHtl)<2 ? 1 : 0.025*WIDTHtl;
 
-
-
     }
 
 
@@ -476,7 +474,7 @@ d3.tsv("swap.tsv", function (error,tsvData) {
           var hGsvg = svgtr;
 
           // create function for x-axis mapping.
-          var xScaleHist = d3.scaleBand().range([MARGINtr.left, hGDim.w]).paddingInner(0.2)
+          var xScaleHist = d3.scaleBand().range([MARGINtr.left, WIDTHtr-MARGINtr.right]).paddingInner(0.15)
                   .domain(fD.map(function(d) { return d[0]; }));
 
 
@@ -490,7 +488,7 @@ d3.tsv("swap.tsv", function (error,tsvData) {
               .call(d3.axisBottom().scale(xScaleHist)).attr("font-size",axisFontSize+"px");
 
           // Create function for y-axis map.
-          var yScaleHist = d3.scaleLinear().range([hGDim.h-MARGINtr.bottom, MARGINtr.top])
+          var yScaleHist = d3.scaleLinear().range([HEIGHTtr-MARGINtr.bottom, MARGINtr.top])
                   .domain([0, d3.max(fD, function(d) { return d[1]; })]);
 
           // Create bars for histogram to contain rectangles and share labels.
@@ -735,7 +733,7 @@ d3.tsv("swap.tsv", function (error,tsvData) {
 
     tm5.setMinutes(tnow.getMinutes()-1);
 
-    let x_live_scale = d3.scaleTime().domain([tm5,tnow]).range([0,(WIDTHtl-MARGINbl.left-MARGINtl.right)]);
+    let x_live_scale = d3.scaleTime().domain([tm5,tnow]).range([0,(WIDTHtl-MARGINtl.left-MARGINtl.right)]);
     let y_live_scale = d3.scaleLinear().domain([60,310]).range([(HEIGHTtl-MARGINtl.top-MARGINtl.bottom),0]);
 
    // AXIS ------------------------------------
@@ -978,24 +976,24 @@ function respondListen() {
                                 .attr("transform","translate("+(0)+","+(0)+")");
 
   let sliderHeight = imageWidth/5;
-  let sliderBallRadius = sliderHeight/10;
+  let sliderBallRadius = sliderHeight/7;
   let gipSliders = gipContainer.append("g")
                               .attr("transform","translate("+(imageWidth/2-sliderHeight)+","+(10*eqnBoxMargin)+")");
 
 gipSliders.append("rect").attr("class", "gipSliders").attr("width", 2).attr("height", sliderHeight).attr("fill","#fff").attr("x", 0).attr("y", 0);
-gipSliders.append("circle").attr("class", "xShift").attr("cx",1).attr("cy",0).attr("r",sliderBallRadius).call(d3.drag().on("drag",xShift)).call(d3.drag().on("start",xShift)).call(d3.drag().on("end",xShift));
+gipSliders.append("circle").attr("class", "xShift").attr("cx",1).attr("cy",0).attr("r",sliderBallRadius).call(d3.drag().on("start",xShift).on("drag",xShift).on("end",xShift));
 gipSliders.append("text").attr("x", 0).attr("y", sliderHeight+15).attr("font-size",eqnBoxWidth/35+"px").attr("fill","#fff").attr("dominant-baseline","middle").style("text-anchor", "middle").text("X-shift");
 
 gipSliders.append("rect").attr("class", "gipSliders").attr("width", 2).attr("height", sliderHeight).attr("fill","#fff").attr("x", eqnBoxWidth/8).attr("y", 0);
-gipSliders.append("circle").attr("class", "yShift").attr("cx",eqnBoxWidth/8+1).attr("cy",0).attr("r",sliderBallRadius).call(d3.drag().on("drag",yShift)).call(d3.drag().on("start",yShift)).call(d3.drag().on("end",yShift));
+gipSliders.append("circle").attr("class", "yShift").attr("cx",eqnBoxWidth/8+1).attr("cy",0).attr("r",sliderBallRadius).call(d3.drag().on("start",yShift).on("drag",yShift).on("end",yShift));
 gipSliders.append("text").attr("x", eqnBoxWidth/8).attr("y", sliderHeight+15).attr("font-size",eqnBoxWidth/35+"px").attr("fill","#fff").attr("dominant-baseline","middle").style("text-anchor", "middle").text("Y-shift");
 
 gipSliders.append("rect").attr("class", "gipSliders").attr("width", 2).attr("height", sliderHeight).attr("fill","#fff").attr("x", 2*eqnBoxWidth/8).attr("y", 0);
-gipSliders.append("circle").attr("class", "quad").attr("cx",2*eqnBoxWidth/8+1).attr("cy",0).attr("r",sliderBallRadius).call(d3.drag().on("drag",quadShift)).call(d3.drag().on("start",quadShift)).call(d3.drag().on("end",quadShift));
+gipSliders.append("circle").attr("class", "quad").attr("cx",2*eqnBoxWidth/8+1).attr("cy",0).attr("r",sliderBallRadius).call(d3.drag().on("start",quadShift).on("drag",quadShift).on("end",quadShift));
 gipSliders.append("text").attr("x", 2*eqnBoxWidth/8).attr("y", sliderHeight+15).attr("font-size",eqnBoxWidth/35+"px").attr("fill","#fff").attr("dominant-baseline","middle").style("text-anchor", "middle").text("__²");
 
 gipSliders.append("rect").attr("class", "gipSliders").attr("width", 2).attr("height", sliderHeight).attr("fill","#fff").attr("x", 3*eqnBoxWidth/8).attr("y", 0);
-gipSliders.append("circle").attr("class", "forth").attr("cx",3*eqnBoxWidth/8+1).attr("cy",0).attr("r",sliderBallRadius).call(d3.drag().on("drag",forthShift)).call(d3.drag().on("start",forthShift)).call(d3.drag().on("end",forthShift));
+gipSliders.append("circle").attr("class", "forth").attr("cx",3*eqnBoxWidth/8+1).attr("cy",0).attr("r",sliderBallRadius).call(d3.drag().on("start",forthShift).on("drag",forthShift).on("end",forthShift));
 gipSliders.append("text").attr("x", 3*eqnBoxWidth/8).attr("y", sliderHeight+15).attr("font-size",eqnBoxWidth/35+"px").attr("fill","#fff").attr("dominant-baseline","middle").style("text-anchor", "middle").text("__⁴");
 
 

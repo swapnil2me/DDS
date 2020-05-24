@@ -37,11 +37,15 @@
 
     <div id="airyBody" class="pseudoBody">
       <div id="airyHome" class="jumbotron text-center">
-        <h1>AiryZoka</h1>
+        <h1>Airy<span id="zoka">Zoka</span></h1>
         <h3>One stop solution for all your degital analytics</h3>
         <h3>Focus on your goals while we work for your degital solutions</h3>
         <div id="introParticles">
 
+        </div>
+        <div class="sectionButtons">
+          <a href="#watch">Watch</a>
+          <a href="#listen">Listen</a>
         </div>
         <script type="text/javascript">
           particlesJS.load('introParticles','particlesLightBg.json',function() {});
@@ -76,13 +80,13 @@
           <div class="title">
             <h1>Listen</h1>
             <h3>To Your Data</h3>
-            <p>Off course we dont stop at visualizing the data! We offer even more! Each data point has something to say. We can even give you the hearing aid that you may need.
+            <p>We dont stop at just visualizing the data! We offer even more! Each data point has something to say. We can even give you the hearing aid that you may need.
               Listen to what your data has to say.You might learn just the thing which you need the most by effectively listening !</p>
           </div>
           <div class="fitBtn">
-              <button type="button" id="clear">clear</button>
+              <button type="button" id="clear">clear canvas</button>
           </div>
-          <div class="subtracted">
+          <div id="touchDisable" class="subtracted">
               <!-- <img class="colorMapPhs" src="amp.png" alt=""> -->
           </div>
           <div>
@@ -97,11 +101,15 @@
   <script src="https://cdn.jsdelivr.net/gh/cferdinandi/smooth-scroll@15.0.0/dist/smooth-scroll.polyfills.min.js"></script>
   <script type="text/javascript">
     const scrollSide = new SmoothScroll('.side-nav a[href*="#"]',{
-      speed:300
+      speed:200
     });
 
     const scrollNav = new SmoothScroll('.navbar a[href*="#"]',{
-      speed:300
+      speed:500
+    });
+
+    const scrollButton = new SmoothScroll('.sectionButtons a[href*="#"]',{
+      speed:500
     });
 
 
@@ -114,5 +122,7 @@
       document.getElementById('side-menu').style.width = '0';
       // document.getElementById('airyBody').style.marginLeft = '0';
     };
+
+    document.getElementById("touchDisable").addEventListener('touchmove', function(e) { e.preventDefault(); }, { passive:false });
   </script>
 </html>
